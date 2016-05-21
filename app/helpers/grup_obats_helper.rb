@@ -1,0 +1,2 @@
+module GrupObatsHelper
+end

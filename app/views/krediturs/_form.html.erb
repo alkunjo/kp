@@ -1,0 +1,64 @@
+<%= form_for @kreditur, remote: true, html: {style: "display:inline;"} do |f| %>
+    <% if @kreditur.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@kreditur.errors.count, "error") %> prohibited this tipe kreditur from being saved:</h2>
+
+        <ul>
+        <% @kreditur.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-2">
+          <%= f.label :nama_kreditur, class: "control-label" %><br>
+        </div>
+        <div class="col-md-4">
+          <%= f.text_field :kreditur_name, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :alamat_kreditur, class: "control-label" %><br>
+        </div>
+        <div class="col-md-4">
+          <%= f.text_field :kreditur_address, class: "form-control" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <%= f.label :telepon_kreditur, class: "control-label" %><br>
+        </div>
+        <div class="col-md-4">
+          <%= f.text_field :kreditur_phone, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :email_kreditur, class: "control-label" %><br>
+        </div>
+        <div class="col-md-4">
+          <%= f.text_field :kreditur_email, class: "form-control" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <%= f.label :fax_kreditur, class: "control-label" %><br>
+        </div>
+        <div class="col-md-4">
+          <%= f.text_field :kreditur_fax, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :contact_person_kreditur, class: "control-label" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.text_field :kreditur_cp, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= f.submit (f.object.new_record? ? "Tambah" : "Ubah"), class: "btn btn-sm btn-primary" %>
+        </div>
+        <div class="col-md-1">
+          <%= link_to 'Batal', new_kreditur_path, class: "btn btn-sm btn-default", remote: true %>
+        </div>
+      </div>
+    </div>
+<% end %>

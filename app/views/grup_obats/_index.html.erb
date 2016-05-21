@@ -1,0 +1,6 @@
+<% @gobats.each do |gobat| %>
+  <tr>
+  	<td><%= gobat.gobat_name %></td>
+    <td><%= link_to 'Hapus', del_gobat_path(gobat), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
+  </tr>
+<% end %>

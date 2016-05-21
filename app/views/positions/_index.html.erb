@@ -1,0 +1,6 @@
+<% @positions.each do |position| %>
+  <tr>
+  	<td><%= position.position_name %></td>
+    <td><%= link_to 'Hapus', del_position_path(position), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
+  </tr>
+<% end %>

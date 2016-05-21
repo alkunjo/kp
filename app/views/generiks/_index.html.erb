@@ -1,0 +1,6 @@
+<% @generiks.each do |generik| %>
+  <tr>
+  	<td><%= generik.generik_name %></td>
+    <td><%= link_to 'Hapus', del_generik_path(generik), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
+  </tr>
+<% end %>

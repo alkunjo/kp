@@ -1,0 +1,2 @@
+module KreditursHelper
+end

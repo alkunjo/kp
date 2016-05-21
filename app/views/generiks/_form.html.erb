@@ -1,0 +1,29 @@
+<%= form_for @generik, remote: true, html: {style: "display:inline;"} do |f| %>
+
+    <% if @generik.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@generik.errors.count, "error") %> prohibited this generik obat from being saved:</h2>
+
+        <ul>
+        <% @generik.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-md-3" style="padding-top:20px">
+        <%= f.label :nama_generik, class: "control-label" %><br>
+      </div>
+      <div class="col-md-6" style="padding-top:20px">
+        <%= f.text_field :generik_name, class: "form-control" %>
+      </div>
+      <div class="col-md-2" style="padding-top:20px">
+        <%= f.submit (f.object.new_record? ? "Tambah" : "Ubah"), class: "btn btn-sm btn-primary" %>
+      </div>
+      <div class="col-md-1" style="padding-top:20px">
+        <%= link_to "Batal", new_generik_path, class: "btn btn-sm btn-default", remote: true %>
+      </div>
+    </div>
+<% end %>

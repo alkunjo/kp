@@ -1,0 +1,26 @@
+<div class="container" style="max-width:400px; margin:15px">
+<%= form_for([@kreditur_pabrik.pabrik, @kreditur_pabrik], remote: true) do |f| %>
+  <% if @kreditur_pabrik.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@kreditur_pabrik.errors.count, "error") %> prohibited this kreditur_pabrik from being saved:</h2>
+
+      <ul>
+      <% @kreditur_pabrik.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.label :kreditur_id %><br>
+      <%= f.collection_select :kreditur_id, @krediturs, :id, :kreditur_name, {prompt: "Select One"}, {class: "form-control"} %>
+    </div>
+    <div class="col-sm-6" style="margin-top:25px">
+      <%= f.submit "Tambah", class: "btn btn-sm btn-primary" %>
+      <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+<% end %>
+</div>

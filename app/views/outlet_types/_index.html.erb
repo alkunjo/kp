@@ -1,0 +1,6 @@
+<% @otypes.each do |otype| %>
+  <tr>
+  	<td><%= otype.otype_name %></td>
+    <td><%= link_to 'Hapus', del_otype_path(otype), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
+  </tr>
+<% end %>

@@ -1,0 +1,14 @@
+<% @users.each do |user| %>
+  <tr>
+  	<td><%= user.user_name %></td>
+  	<td><%= user.position.position_name %></td>
+  	<td><%= user.outlet.outlet_name %></td>
+  	<td><%= user.role.role_name %></td>
+  	<td><%= user.user_phone %></td>
+  	<td><%= user.last_sign_in_at %></td>
+    <td>
+    	<%= link_to user_path(user), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} do %> <span class="fa fa-eye"></span> Lihat<% end %>
+    	<%= link_to 'Ubah', edit_user_path(user), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} %> 
+    	<%= link_to 'Hapus', del_user_path(user), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
+  </tr>
+<% end %>

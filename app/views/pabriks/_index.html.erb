@@ -1,0 +1,7 @@
+<% @pabriks.each do |pabrik| %>
+  <tr>
+  	<td><%= pabrik.pabrik_name %></td>
+    <td><%= link_to pabrik_path(pabrik), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} do %> <span class="fa fa-eye"></span> Lihat<% end %></td>
+    <td><%= link_to del_pabrik_path(pabrik), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} do %><span class="fa fa-trash-o"></span> Hapus<% end %></td>
+  </tr>
+<% end %>

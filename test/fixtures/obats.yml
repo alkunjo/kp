@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  obat_name: MyString
+  obat_minStock: 1
+  obat_hpp: 1
+  obat_hna: 1
+  obat_kons: 1
+  obat_askes: 1
+  obat_hnask: 1
+  obat_hnahppn: 1
+  obat_hnaskppn: 1
+  obat_hja: 1
+  grup_obat_id: 
+  generik_id: 
+  dosage_id: 
+  jenis_obat_id: 
+  racik_id: 
+  kategori_obat_id: 
+  kemasan_id: 
+  pabrik_id: 
+
+two:
+  obat_name: MyString
+  obat_minStock: 1
+  obat_hpp: 1
+  obat_hna: 1
+  obat_kons: 1
+  obat_askes: 1
+  obat_hnask: 1
+  obat_hnahppn: 1
+  obat_hnaskppn: 1
+  obat_hja: 1
+  grup_obat_id: 
+  generik_id: 
+  dosage_id: 
+  jenis_obat_id: 
+  racik_id: 
+  kategori_obat_id: 
+  kemasan_id: 
+  pabrik_id: 

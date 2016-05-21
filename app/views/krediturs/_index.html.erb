@@ -1,0 +1,13 @@
+<% @krediturs.each do |kreditur| %>
+  <tr>
+  	<td><%= kreditur.kreditur_name %></td>
+  	<td><%= kreditur.kreditur_address %></td>
+  	<td><%= kreditur.kreditur_phone %></td>
+  	<td><%= kreditur.kreditur_email %></td>
+  	<td><%= kreditur.kreditur_fax %></td>
+  	<td><%= kreditur.kreditur_cp %></td>
+    <td align="center">
+    	<%= link_to 'Ubah', edit_kreditur_path(kreditur), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} %> <%= link_to 'Hapus', del_kreditur_path(kreditur), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %>
+    </td>
+  </tr>
+<% end %>

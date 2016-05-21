@@ -1,0 +1,29 @@
+<%= form_for @gobat, remote: true, html: {style: "display:inline;"} do |f| %>
+    
+    <% if @gobat.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@gobat.errors.count, "error") %> prohibited this grup obat from being saved:</h2>
+
+        <ul>
+        <% @gobat.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <div class="col-md-3">
+        <%= f.label :nama_grup_obat, class: "control-label" %><br>
+      </div>
+      <div class="col-md-5">
+        <%= f.text_field :gobat_name, class: "form-control" %>
+      </div>
+      <div class="col-md-2">
+        <%= f.submit (f.object.new_record? ? "Tambah" : "Ubah"), class: "btn btn-sm btn-primary" %>
+      </div>
+      <div class="col-md-1">
+        <%= link_to 'Batal', new_grup_obat_path, class: "btn btn-sm btn-default", remote: true %>
+      </div>
+    </div>
+<% end %>

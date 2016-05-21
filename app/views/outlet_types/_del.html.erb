@@ -1,0 +1,5 @@
+<div class="container" align="center" style="max-width:400px;padding-top:10px">
+	Apakah Anda yakin menghapus jenis outlet <%= @otype.otype_name %> ?<br><br>
+	<%= link_to "Destroy", outlet_type_path(@otype), method: :delete, remote:true , class: "btn btn-danger btn-sm" %>&nbsp;&nbsp;&nbsp;
+	<%= link_to "Cancel", "#", class: "btn btn-default", data: {dismiss: "modal"} %><br><br>
+</div>

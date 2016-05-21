@@ -1,0 +1,55 @@
+<%= form_for @kemasan, remote: true, html: {style: "display:inline;"} do |f| %>
+    
+    <% if @kemasan.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@kemasan.errors.count, "error") %> prohibited this kemasan from being saved:</h2>
+
+        <ul>
+        <% @kemasan.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.label :nama_kemasan, class: "control-label" %>
+        </div>
+        <div class="col-md-6">
+          <%= f.text_field :kemasan_name, class: "form-control" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.label :volume_kemasan, class: "control-label" %>
+        </div>
+        <div class="col-md-6">
+          <%= f.number_field :kemasan_vol, class: "form-control" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.label :kapasitas_kemasan, class: "control-label" %>
+        </div>
+        <div class="col-md-6">
+          <%= f.number_field :kemasan_cap, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= f.submit (f.object.new_record? ? "Tambah" : "Ubah"), class: "btn btn-sm btn-primary" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.label :satuan_kemasan, class: "control-label" %><br>
+        </div>
+        <div class="col-md-6">
+          <%= f.text_field :kemasan_unit, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= link_to 'Batal', new_kemasan_path, class: "btn btn-sm btn-default", remote: true %>
+        </div>
+      </div>
+    </div>
+<% end %>

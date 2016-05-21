@@ -1,0 +1,10 @@
+31 Januari 2016: wawancara dan observasi sistem
+
+2 - 4 feb 2016: desain database
+- revisi ERD
+- bikin master page: schema_migrations, jenis_obats, dosages, kemasans, grup_obats, pabriks, generiks, raciks, kategori_obats, outlet_types
+
+4 feb 2016: konsultasi ERD tabel transaksi, stok
+
+1 April 2016:
+nomor BPBA diberikan kode APP

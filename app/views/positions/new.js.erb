@@ -1,0 +1,3 @@
+$(".isiPosisi").html("<%= escape_javascript(render 'index') %>")
+$("#posisiModal").modal("hide")
+$('#form').html("<%= escape_javascript(render action: :new, partial: 'form') %>");

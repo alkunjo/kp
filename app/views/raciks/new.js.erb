@@ -1,0 +1,3 @@
+$(".isiRacik").html("<%= escape_javascript(render 'index') %>")
+$("#racikModal").modal("hide")
+$('#form').html("<%= escape_javascript(render action: :new, partial: 'form') %>")

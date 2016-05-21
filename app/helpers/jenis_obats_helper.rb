@@ -1,0 +1,2 @@
+module JenisObatsHelper
+end

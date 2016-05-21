@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  kemasan_name: MyString
+  kemasan_vol: 1
+  kemasan_cap: 1
+  kemasan_unit: MyString
+
+two:
+  kemasan_name: MyString
+  kemasan_vol: 1
+  kemasan_cap: 1
+  kemasan_unit: MyString

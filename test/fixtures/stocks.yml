@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stok_qty: 1
+  outlet_id: 
+  obat_id: 
+
+two:
+  stok_qty: 1
+  outlet_id: 
+  obat_id: 

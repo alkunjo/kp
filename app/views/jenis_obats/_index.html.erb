@@ -1,0 +1,6 @@
+<% @jobats.each do |jobat| %>
+  <tr>
+  	<td><%= jobat.jobat_name %></td>
+    <td><%= link_to 'Hapus', del_jobat_path(jobat), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
+  </tr>
+<% end %>

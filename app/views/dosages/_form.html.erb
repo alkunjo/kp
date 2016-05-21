@@ -1,0 +1,35 @@
+<%= form_for @dosage, remote: true, html: {style: "display:inline"} do |f| %>
+  <% if @dosage.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(@dosage.errors.count, "error") %>:</h5>
+      <ul>
+        <% @dosage.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="form-group">
+      <div class="col-md-4">
+        <%= f.label :nama_dosis, class: "control-label" %>
+      </div>
+      <div class="col-md-6">
+        <%= f.text_field :dosage_name, class: "form-control", id: "dosage_name" %><br>
+      </div>
+      <div class="col-md-2">
+        <%= f.submit (f.object.new_record? ? "Tambah" : "Ubah"), class: "btn btn-sm btn-primary" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-4">
+        <%= f.label :judul_dosis, class: "control-label" %><br>
+      </div>
+      <div class="col-md-6">
+        <%= f.text_field :dosage_judul, class: "form-control", id:"dosage_judul" %>
+      </div>
+      <div class="col-md-2" style="padding: 0 25px 0 25px">
+        <%= link_to 'Batal', new_dosage_path, class: "btn btn-sm btn-default", remote: true %>
+      </div>
+    </div>
+<% end %>

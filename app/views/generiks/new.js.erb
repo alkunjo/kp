@@ -1,0 +1,3 @@
+$(".isiGenerik").html("<%= escape_javascript(render 'index') %>")
+$("#generikModal").modal("hide")
+$('#form').html("<%= escape_javascript(render action: :new, partial: 'form') %>");

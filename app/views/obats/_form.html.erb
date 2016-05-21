@@ -1,0 +1,151 @@
+<%= form_for @obat, remote: true, html: {style: "display:inline;"} do |f| %>
+    <% if @obat.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@obat.errors.count, "error") %> prohibited this tipe obat from being saved:</h2>
+
+        <ul>
+        <% @obat.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-2">
+          <%= f.label :nama_obat, class: "control-label" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.text_field :obat_name, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :grup_obat, class: "control-label" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.collection_select :grup_obat_id, @gobats, :id, :gobat_name, {prompt: "Pilih satu"}, {class: "form-control"} %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <%= f.label :generik, class: "control-label" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.collection_select :generik_id, @generiks, :id, :generik_name, {prompt: "Pilih satu"}, {class: "form-control"} %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :dosis, class: "control-label" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.collection_select :dosage_id, @dosages, :id, :dosage_name, {prompt: "Pilih satu"}, {class: "form-control"} %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <%= f.label :jenis_obat, class: "control-label" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.collection_select :jenis_obat_id, @jobats, :id, :jobat_name, {prompt: "Pilih satu"}, {class: "form-control"} %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :racikan, class: "control-label" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.collection_select :racik_id, @raciks, :id, :racik_name, {prompt: "Pilih satu"}, {class: "form-control"} %>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-2">
+          <%= f.label :kategori_obat, class: "control-label" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.collection_select :kategori_obat_id, @kobats, :id, :kobat_name, {prompt: "Pilih satu"}, {class: "form-control"} %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :kemasan, class: "control-label" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.collection_select :kemasan_id, @kemasans, :id, :kemasan_name, {prompt: "Pilih satu"}, {class: "form-control"} %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <%= f.label :pabrik, class: "control-label" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.collection_select :pabrik_id, @pabriks, :id, :pabrik_name, {prompt: "Pilih satu"}, {class: "form-control"} %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :stok_minimum, class: "control-label" %>
+        </div>
+        <div class="col-md-1">
+          <%= f.text_field :obat_minStock, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= f.label :hpp, class: "control-label" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.text_field :obat_hpp, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-1">
+          <%= f.label :hna, class: "control-label" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.text_field :obat_hna, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= f.label :kons, class: "control-label" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.text_field :obat_kons, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= f.label :askes, class: "control-label" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.text_field :obat_askes, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= f.label :hnask, class: "control-label" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.text_field :obat_hnask, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-1">
+          <%= f.label :hnappn, class: "control-label" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.text_field :obat_hnahppn, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= f.label :hnaskppn, class: "control-label" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.text_field :obat_hnaskppn, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= f.label :hja, class: "control-label" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.text_field :obat_hja, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.submit (f.object.new_record? ? "Tambah" : "Ubah"), class: "btn btn-sm btn-primary" %>
+        </div>
+        <div class="col-md-1">
+          <%= link_to 'Batal', new_obat_path, class: "btn btn-sm btn-default", remote: true %>
+        </div>
+      </div>     
+    </div>
+<% end %>

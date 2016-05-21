@@ -1,0 +1,3 @@
+$('#pabrikModal').modal('show');
+$('#pabrikModal .modal-title').html('Daftar Kreditur Pabrik <%= escape_javascript(link_to "Tambah baru", new_pabrik_kreditur_pabrik_path(@pabrik), class: "btn btn-sm btn-default", remote: true) %>');
+$('#pabrikModal .modal-isi').html("<%= escape_javascript(render partial: 'kreditur_pabriks/index') %>");

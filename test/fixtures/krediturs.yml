@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  kreditur_name: MyString
+  kreditur_address: MyString
+  kreditur_phone: MyString
+  kreditur_fax: MyString
+  kreditur_email: MyString
+  kreditur_cp: MyString
+
+two:
+  kreditur_name: MyString
+  kreditur_address: MyString
+  kreditur_phone: MyString
+  kreditur_fax: MyString
+  kreditur_email: MyString
+  kreditur_cp: MyString

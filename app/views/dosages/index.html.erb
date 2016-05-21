@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<h3 align="center"><b>Master Dosis</b></h3><br/><br/>
+
+<% if can? :manage, Dosage %>
+<div id="form" style="max-width:700px; min-height:100px">
+    <%= render 'form' %>
+</div>
+<% end %>
+
+<%= form_tag import_dosages_path, multipart: true do %>
+  <div class="col-md-3"><b>Import Dosis</b></div>
+  <div class="col-md-4">
+    <%= file_field_tag :file, class: "form-control" %>
+  </div>
+  <div class="col-md-4">
+    <%= submit_tag "Submit", class: "btn btn-sm btn-primary" %>
+  </div> 
+<% end %>
+
+<br/><br/><br/>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th style="text-align:center">Nama</th>
+      <th style="text-align:center">Judul</th>
+     <% if can? :manage, Dosage %>
+      <th colspan="2" style="text-align:center">Aksi</th>
+     <% end %>
+    </tr>
+  </thead>
+
+  <tbody id="tabelDosage" class="isiDosage">
+    <%= render 'index' %>
+  </tbody>
+</table>
+<div class="modal fade" id="dosageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog"style="width:450px">
+    <div class="modal-content">
+      <div class="modal-header" align="center">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-isi"></div>
+    </div>
+  </div>
+</div>

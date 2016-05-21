@@ -1,0 +1,6 @@
+<% @kobats.each do |kobat| %>
+  <tr>
+  	<td><%= kobat.kobat_name %></td>
+    <td><%= link_to 'Hapus', del_kobat_path(kobat), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
+  </tr>
+<% end %>

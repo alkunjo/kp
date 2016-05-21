@@ -1,0 +1,153 @@
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">
+      <%= image_tag("logo.png", size: "70x30") %>
+    </a>
+  </div>
+  <!-- /.navbar-header -->
+  
+  <ul class="nav navbar-top-links navbar-right">
+    <!-- /.dropdown -->
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="fa fa-bell fa-fw"></i>
+        <i class="fa fa-caret-down"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-alerts">
+        <li>
+          <a href="#">
+            <div>
+              <i class="fa fa-comment fa-fw"></i>New Comment
+              <span class="pull-right text-muted small">
+                4 minutes ago
+              </span>
+            </div>
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <a href="#">
+            <div>
+              <i class="fa fa-twitter fa-fw"></i>3 New Followers
+              <span class="pull-right text-muted small">
+                12 minutes ago
+              </span>
+            </div>
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <a href="#">
+            <div>
+              <i class="fa fa-envelope fa-fw"></i>Message Sent
+              <span class="pull-right text-muted small">
+                4 minutes ago
+              </span>
+            </div>
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <a href="#">
+            <div>
+              <i class="fa fa-tasks fa-fw"></i>New Task
+              <span class="pull-right text-muted small">
+                4 minutes ago
+              </span>
+            </div>
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <a href="#">
+            <div>
+              <i class="fa fa-upload fa-fw"></i>Server Rebooted
+              <span class="pull-right text-muted small">
+                4 minutes ago
+              </span>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <!-- /.dropdown-alerts -->
+    </li>
+    <!-- /.dropdown -->
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="fa fa-user fa-fw"></i>
+        <i class="fa fa-caret-down"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-user">
+        <li><%= link_to edit_user_registration_path do %><i class="fa fa-user fa-fw"></i> Edit Profil<% end %></li>
+        <li><%= link_to destroy_user_session_path, :method => :delete do %><i class="fa fa-sign-out fa-fw"></i> Logout<% end %></li>
+      </ul>
+      <!-- /.dropdown-user -->
+    </li>
+    <!-- /.dropdown -->
+  </ul>
+  <!-- /.navbar-top-links -->
+  
+  <div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+      <ul class="nav" id="side-menu">
+        <li><a href="#"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a></li>
+        <li>
+          <a data-toggle="collapse" data-parent="side-menu" href="#drugs"><i class="fa fa-medkit fa-fw"></i>Master Obat<span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level collapse in" id="drugs">
+            <li><%= link_to "Obat", obats_path, :class => current_class?(obats_path) %></li>
+            <li><%= link_to "Stock", stocks_path, :class => current_class?(stocks_path) %></li>
+            <li><%= link_to "Dosis", dosages_path, :class => current_class?(dosages_path) %></li>
+            <li><%= link_to "Generik", generiks_path, :class => current_class?(generiks_path) %></li>
+            <li><%= link_to "Grup Obat", grup_obats_path, :class => current_class?(grup_obats_path) %></li>
+            <li><%= link_to "Jenis Obat", jenis_obats_path, :class => current_class?(jenis_obats_path) %></li>
+            <li><%= link_to "Kategori Obat", kategori_obats_path, :class => current_class?(kategori_obats_path) %></li>
+            <li><%= link_to "Kemasan", kemasans_path, :class => current_class?(kemasans_path) %></li>
+            <li><%= link_to "Racikan", raciks_path, :class => current_class?(raciks_path) %></li>
+          </ul>
+          <!-- /.nav-second-level -->
+        </li>
+        <li>
+          <a data-toggle="collapse" data-parent="side-menu" href="#entity"><i class="fa fa-building fa-fw"></i>Master Entitas<span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level collapse in" id="entity">
+            <li><%= link_to "Tipe Outlet", outlet_types_path, :class => current_class?(outlet_types_path) %></li>
+            <li><%= link_to "Pabrik", pabriks_path, :class => current_class?(pabriks_path) %></li>
+            <li><%= link_to "Outlet", outlets_path, :class => current_class?(outlets_path) %></li>
+            <li><%= link_to "Kreditur", krediturs_path, :class => current_class?(krediturs_path) %></li>
+          </ul>
+          <!-- /.nav-second-level -->
+        </li>
+        <li>
+          <a data-toggle="collapse" data-parent="side-menu" href="#user"><i class="fa fa-user fa-fw"></i>Master Pengguna<span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level collapse in" id="report">
+            <li><%= link_to "Posisi", positions_path, :class => current_class?(positions_path) %></li>
+            <li><%= link_to "Role", roles_path, :class => current_class?(roles_path) %></li>
+            <li><%= link_to "Pengguna", users_path, :class => current_class?(users_path) %></li>
+          </ul>
+          <!-- /.nav-second-level -->
+        </li>
+        <li>
+          <a data-toggle="collapse" data-parent="side-menu" href="#trans"><i class="fa fa-money fa-fw"></i>Master Transaksi<span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level collapse in" id="trans">
+            <li><%= link_to "Transaksi BPBA", "#" %></li>
+            <li><%= link_to "Transaksi Dropping", "#" %></li>
+          </ul>
+          <!-- /.nav-second-level -->
+        </li>
+        <li>
+          <a data-toggle="collapse" data-parent="side-menu" href="#report"><i class="fa fa-paperclip fa-fw"></i>Master Laporan<span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level collapse in" id="report">
+            <li><%= link_to "Lapporan BPBA", "#" %></li>
+            <li><%= link_to "Lapporan Dropping", "#" %></li>
+          </ul>
+          <!-- /.nav-second-level -->
+        </li>
+        <li><a href="#"><span class="fa fa-question-circle fa-fw"></span> About</a> </li>
+      </ul>
+    </div>
+    <!-- /.sidebar-collapse -->
+  </div>
+  <!-- /.navbar-static-side -->
+</nav>
