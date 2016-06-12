@@ -34,13 +34,18 @@ class GeneriksController < ApplicationController
     end
   end
 
+  def import
+    Generik.import(params[:file])
+    redirect_to generiks_path, notice: "Generik imported."
+  end
+
   private
     def set_generik
       @generik = Generik.find(params[:id])
     end
 
     def set_generiks
-      @generiks = Generik.all
+      @generiks = Generik.paginate(:page => params[:page], :per_page => 10)
     end
 
     def generik_params

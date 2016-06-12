@@ -3,7 +3,7 @@ class OutletsController < ApplicationController
   before_action :set_outlet, only: [:del, :destroy, :edit, :update]
   before_action :set_outlets, only: [:index, :create, :destroy, :edit, :update, :new]
   before_action :set_otypes, only: [:new, :create, :edit, :update, :index]
-  
+  autocomplete :outlet, :outlet_name, full: true
   def index
     @outlet = Outlet.new
   end
@@ -55,7 +55,7 @@ class OutletsController < ApplicationController
     end
 
     def set_outlets
-      @outlets = Outlet.all
+      @outlets = Outlet.paginate(:page => params[:page], :per_page => 7)
     end
 
     def set_otypes

@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<% render 'dtrans_asks/form' %>
+
+<table class="table table-stiped table-bordered" id="dtaTabel">
+  <thead>
+    <tr>
+      <th>Obat</th>
+      <th>Kuantitas</th>
+      <th colspan="2">Aksi</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @dtrans_asks.nil? %>
+
+    <% else %>
+      <% @dtrans_asks.each do |dtrans_ask| %>
+        <tr>
+          <td><%= Obat.find(dtrans_ask.obat).obat_name %></td>
+          <td><%= dtrans_ask.dta_qty %></td>
+          <td><%= link_to 'Edit', edit_dtrans_ask_path(dtrans_ask) %></td>
+          <td><%= link_to 'Destroy', dtrans_ask, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

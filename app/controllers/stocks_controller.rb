@@ -61,6 +61,11 @@ class StocksController < ApplicationController
     end
   end
 
+  def import
+    Stock.import(params[:file])
+    redirect_to stocks_path, notice: "Stock imported."
+  end
+
   private
     def set_stock
       @stock = Stock.find(params[:id])
@@ -71,7 +76,7 @@ class StocksController < ApplicationController
     end
 
     def set_stocks
-      @stocks = Stock.all
+      @stocks = Stock.paginate(:page => params[:page], :per_page => 10)
     end
 
     def set_obats

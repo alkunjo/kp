@@ -34,11 +34,12 @@ gem 'paperclip'
 gem 'devise'
 gem 'prawn'
 gem 'cancancan'
-gem 'rails4-autocomplete'
+gem 'rails-jquery-autocomplete'
 gem 'roo'
 gem 'iconv'
 gem 'roo-xls'
 gem 'spreadsheet'
+gem 'will_paginate-bootstrap'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

@@ -2,10 +2,21 @@
 
 <h3 align="center"><b>Master Grup Obat</b></h3><br/><br/>
 
-<div id="form" style="max-width:700px; min-height:70px">
-  <%= render 'form' %>
-</div>
-
+<% if can? :manage, GrupObat %>
+  <div id="form" style="max-width:700px; min-height:70px">
+    <%= render 'form' %>
+  </div>
+  <%= form_tag import_grup_obats_path, multipart: true do %>
+    <div class="col-md-3"><b>Import Grup Obat</b></div>
+    <div class="col-md-4">
+      <%= file_field_tag :file, class: "form-control" %>
+    </div>
+    <div class="col-md-4">
+      <%= submit_tag "Submit", class: "btn btn-sm btn-primary" %>
+    </div> 
+  <% end %>
+<% end %>
+<br/>
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
@@ -18,6 +29,9 @@
     <%= render 'index' %>
   </tbody>
 </table>
+<div align="center">
+  <%= will_paginate @gobats, renderer: BootstrapPagination::Rails %>
+</div>
 <div class="modal fade" id="gobatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog"style="width:450px">
     <div class="modal-content">

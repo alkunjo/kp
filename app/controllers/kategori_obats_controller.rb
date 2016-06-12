@@ -34,13 +34,18 @@ class KategoriObatsController < ApplicationController
     end
   end
 
+  def import
+    KategoriObat.import(params[:file])
+    redirect_to kategori_obats_path, notice: "Kategori Obat imported."
+  end
+
   private
     def set_kobat
       @kobat = KategoriObat.find(params[:id])
     end
 
     def set_kobats
-      @kobats = KategoriObat.all
+      @kobats = KategoriObat.paginate(:page => params[:page], :per_page => 10)
     end
 
     def kobat_params

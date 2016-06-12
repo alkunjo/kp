@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dta_qty: 1
+  transaksi_ask_id: 
+  obat_id: 
+
+two:
+  dta_qty: 1
+  transaksi_ask_id: 
+  obat_id: 

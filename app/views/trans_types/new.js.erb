@@ -1,0 +1,3 @@
+$(".isiTtype").html("<%= escape_javascript(render 'index') %>")
+$("#ttypeModal").modal("hide")
+$('#form').html("<%= escape_javascript(render action: :new, partial: 'form') %>")

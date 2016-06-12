@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class JenisObatsControllerTest < ActionController::TestCase
+class TransTypeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

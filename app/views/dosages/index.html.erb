@@ -1,21 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<h3 align="center"><b>Master Dosis</b></h3><br/><br/>
+<h3 align="center"><b>Master Dosis</b></h3>
 
 <% if can? :manage, Dosage %>
-<div id="form" style="max-width:700px; min-height:100px">
-    <%= render 'form' %>
-</div>
-<% end %>
-
-<%= form_tag import_dosages_path, multipart: true do %>
-  <div class="col-md-3"><b>Import Dosis</b></div>
-  <div class="col-md-4">
-    <%= file_field_tag :file, class: "form-control" %>
+  <div id="form" style="max-width:700px; min-height:100px">
+      <%= render 'form' %>
   </div>
-  <div class="col-md-4">
-    <%= submit_tag "Submit", class: "btn btn-sm btn-primary" %>
-  </div> 
+
+  <%= form_tag import_dosages_path, multipart: true do %>
+    <div class="col-md-3"><b>Import Dosis</b></div>
+    <div class="col-md-4">
+      <%= file_field_tag :file, class: "form-control" %>
+    </div>
+    <div class="col-md-4">
+      <%= submit_tag "Submit", class: "btn btn-sm btn-primary" %>
+    </div> 
+  <% end %>
 <% end %>
 
 <br/><br/><br/>
@@ -30,11 +30,13 @@
      <% end %>
     </tr>
   </thead>
-
   <tbody id="tabelDosage" class="isiDosage">
     <%= render 'index' %>
   </tbody>
 </table>
+<div align="center">
+  <%= will_paginate @dosages, renderer: BootstrapPagination::Rails %>
+</div>
 <div class="modal fade" id="dosageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog"style="width:450px">
     <div class="modal-content">

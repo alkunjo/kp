@@ -1,24 +1,29 @@
 <p id="notice"><%= notice %></p>
 
-<h3 align="center"><b>Master Jenis Obat</b></h3><br/><br/>
+<h3 align="center"><b>Master Tipe Transaksi</b></h3><br/><br/>
+<% if can? :manage, TransType %>
+  <div id="form" style="max-width:700px; min-height:100px">
+    <%= render 'form' %>
+  </div>
+<% end %>
 
-<div id="form" style="max-width:700px; min-height:100px">
-  <%= render 'form' %>
-</div>
 
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
       <th style="text-align:center">Nama</th>
-      <th style="text-align:center">Judul</th>
+      <th style="text-align:center">Aksi</th>
     </tr>
   </thead>
 
-  <tbody id="tabelJobat" class="isiJobat">
+  <tbody id="tabelTtype" class="isiTtype">
     <%= render 'index' %>
   </tbody>
 </table>
-<div class="modal fade" id="jobatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div align="center">
+  <%= will_paginate @ttypes, renderer: BootstrapPagination::Rails %>
+</div>
+<div class="modal fade" id="ttypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog"style="width:450px">
     <div class="modal-content">
       <div class="modal-header" align="center">

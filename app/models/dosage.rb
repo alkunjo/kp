@@ -35,7 +35,7 @@ class Dosage < ActiveRecord::Base
 	  when ".csv" then Roo::CSV.new(file.path, packed: false, file_warning: :ignore)
 	  when ".xls" then Roo::Excel.new(file.path, packed: false, file_warning: :ignore)
 	  when ".xlsx" then Roo::Excelx.new(file.path, packed: false, file_warning: :ignore)
-	  else raise "Unknown file type: #{file.original_filename}"
+	  else raise "Tipe file tidak dikenal: #{file.original_filename}"
 	  end
 	end
 end

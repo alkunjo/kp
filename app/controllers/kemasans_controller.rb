@@ -53,7 +53,7 @@ class KemasansController < ApplicationController
     end
 
     def set_kemasans
-      @kemasans = Kemasan.all
+      @kemasans = Kemasan.paginate(:page => params[:page], :per_page => 10)
     end
 
     def kemasan_params

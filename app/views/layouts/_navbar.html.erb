@@ -102,7 +102,6 @@
             <li><%= link_to "Dosis", dosages_path, :class => current_class?(dosages_path) %></li>
             <li><%= link_to "Generik", generiks_path, :class => current_class?(generiks_path) %></li>
             <li><%= link_to "Grup Obat", grup_obats_path, :class => current_class?(grup_obats_path) %></li>
-            <li><%= link_to "Jenis Obat", jenis_obats_path, :class => current_class?(jenis_obats_path) %></li>
             <li><%= link_to "Kategori Obat", kategori_obats_path, :class => current_class?(kategori_obats_path) %></li>
             <li><%= link_to "Kemasan", kemasans_path, :class => current_class?(kemasans_path) %></li>
             <li><%= link_to "Racikan", raciks_path, :class => current_class?(raciks_path) %></li>
@@ -129,10 +128,10 @@
           <!-- /.nav-second-level -->
         </li>
         <li>
-          <a data-toggle="collapse" data-parent="side-menu" href="#trans"><i class="fa fa-money fa-fw"></i>Master Transaksi<span class="fa arrow"></span></a>
+          <a data-toggle="collapse" data-parent="side-menu" href="#trans"><i class="fa fa-money fa-fw"></i>Transaksi<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level collapse in" id="trans">
-            <li><%= link_to "Transaksi BPBA", "#" %></li>
-            <li><%= link_to "Transaksi Dropping", "#" %></li>
+            <li><%= link_to "Transaksi Permintaan", transaksi_asks_path, :class => current_class?(transaksi_asks_path) %></li>
+            
           </ul>
           <!-- /.nav-second-level -->
         </li>

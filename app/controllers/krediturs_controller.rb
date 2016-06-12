@@ -37,6 +37,11 @@ class KreditursController < ApplicationController
     end
   end
 
+  def import
+    Kreditur.import(params[:file])
+    redirect_to krediturs_path, notice: "Kreditur imported."
+  end
+
   def update
     respond_to do |format|
       if @kreditur.update(kreditur_params)
@@ -53,7 +58,7 @@ class KreditursController < ApplicationController
     end
 
     def set_krediturs
-      @krediturs = Kreditur.all
+      @krediturs = Kreditur.paginate(:page => params[:page], :per_page => 10)
     end
 
     def kreditur_params

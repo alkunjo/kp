@@ -1,7 +1,14 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do  
+  resources :transaksi_asks do
+    resources :dtrans_asks  
+    get :autocomplete_outlet_outlet_name, on: :collection
+  end
+
+  resources :trans_types
   resources :stocks do
     get :autocomplete_outlet_outlet_name, on: :collection
     get :autocomplete_obat_obat_name, on: :collection
+    collection {post :import}
   end
   devise_for :users
   scope "/admin" do
@@ -15,10 +22,13 @@ Rails.application.routes.draw do
   resources :roles
   
   resources :obats do
+    get :autocomplete_obat_obat_name, on: :collection
     collection {post :import}
   end
 
-  resources :krediturs
+  resources :krediturs do
+    collection {post :import}
+  end
   
   resources :outlets do
     collection {post :import}
@@ -26,21 +36,30 @@ Rails.application.routes.draw do
   
   resources :positions
   resources :outlet_types
-  resources :generiks
+  resources :generiks do
+    collection { post :import}
+  end
   resources :raciks
-  resources :kategori_obats
+  resources :kategori_obats do
+    collection {post :import}
+  end
   resources :pabriks do
     resources :kreditur_pabriks
   end
-  resources :grup_obats
+  resources :grup_obats do
+    collection {post :import}
+  end
   resources :kemasans
   resources :dosages do
     collection { post :import }
   end
-  resources :jenis_obats
+
+  resources :transaksi_drops do
+      get :autocomplete_outlet_outlet_name, on: :collection
+  end
+
   get 'dosages/:id/del' => 'dosages#del', as: :del_dosage
   get 'kemasans/:id/del' => 'kemasans#del', as: :del_kemasan
-  get 'jenis_obats/:id/del' => 'jenis_obats#del', as: :del_jobat
   get 'grup_obats/:id/del' => 'grup_obats#del', as: :del_gobat
   get 'pabriks/:id/del' => 'pabriks#del', as: :del_pabrik
   get 'kategori_obats/:id/del' => 'kategori_obats#del', as: :del_kobat
@@ -54,6 +73,9 @@ Rails.application.routes.draw do
   get 'roles/:id/del' => 'roles#del', as: :del_role
   get 'users/:id/del' => 'users#del', as: :del_user
   get 'stocks/:id/del' => 'stocks#del', as: :del_stock
+  get 'trans_type/:id/del' => 'trans_type#del', as: :del_ttype
+  get 'transaksi_ask/:id/del' => 'transaksi_ask#del', as: :del_transaksi_ask
+  get 'transaksi_drop/:id/del' => 'transaksi_drop#del', as: :del_transaksi_drop
   
   root to: "dosages#index"
   # The priority is based upon order of creation: first created -> highest priority.

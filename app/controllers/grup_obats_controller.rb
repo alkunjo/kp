@@ -45,13 +45,18 @@ class GrupObatsController < ApplicationController
     end
   end
 
+  def import
+    GrupObat.import(params[:file])
+    redirect_to grup_obats_path, notice: "Grup Obat imported."
+  end
+
   private
     def set_gobat
       @gobat = GrupObat.find(params[:id])
     end
 
     def set_gobats
-      @gobats = GrupObat.all
+      @gobats = GrupObat.paginate(:page => params[:page], :per_page => 10)
     end
 
     def gobat_params

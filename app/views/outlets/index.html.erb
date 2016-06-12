@@ -22,6 +22,9 @@
     <%= render 'index' %>
   </tbody>
 </table>
+<div align="center">
+  <%= will_paginate @outlets, renderer: BootstrapPagination::Rails %>
+</div>
 <div class="modal fade" id="outletModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog"style="width:450px">
     <div class="modal-content">

@@ -62,7 +62,7 @@ class DosagesController < ApplicationController
     end
 
     def set_dosages
-      @dosages = Dosage.all
+      @dosages = Dosage.paginate(:page => params[:page], :per_page => 10)
     end
 
     def dosage_params

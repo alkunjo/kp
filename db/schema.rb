@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425034446) do
+ActiveRecord::Schema.define(version: 20160611050653) do
 
   create_table "dosages", primary_key: "dosage_id", force: :cascade do |t|
     t.string   "dosage_name",  limit: 255
@@ -19,6 +19,17 @@ ActiveRecord::Schema.define(version: 20160425034446) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
+
+  create_table "dtrans_asks", id: false, force: :cascade do |t|
+    t.integer  "transaksi_ask_id", limit: 4, default: 0, null: false
+    t.integer  "obat_id",          limit: 4, default: 0, null: false
+    t.integer  "dta_qty",          limit: 4
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "dtrans_asks", ["obat_id"], name: "index_dtrans_asks_on_obat_id", using: :btree
+  add_index "dtrans_asks", ["transaksi_ask_id"], name: "index_dtrans_asks_on_transaksi_ask_id", using: :btree
 
   create_table "generiks", primary_key: "generik_id", force: :cascade do |t|
     t.string   "generik_name", limit: 255
@@ -28,12 +39,6 @@ ActiveRecord::Schema.define(version: 20160425034446) do
 
   create_table "grup_obats", primary_key: "gobat_id", force: :cascade do |t|
     t.string   "gobat_name", limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  create_table "jenis_obats", primary_key: "jobat_id", force: :cascade do |t|
-    t.string   "jobat_name", limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -78,7 +83,6 @@ ActiveRecord::Schema.define(version: 20160425034446) do
     t.integer  "grup_obat_id",     limit: 4
     t.integer  "generik_id",       limit: 4
     t.integer  "dosage_id",        limit: 4
-    t.integer  "jenis_obat_id",    limit: 4
     t.integer  "racik_id",         limit: 4
     t.integer  "kategori_obat_id", limit: 4
     t.integer  "kemasan_id",       limit: 4
@@ -100,7 +104,6 @@ ActiveRecord::Schema.define(version: 20160425034446) do
   add_index "obats", ["dosage_id"], name: "index_obats_on_dosage_id", using: :btree
   add_index "obats", ["generik_id"], name: "index_obats_on_generik_id", using: :btree
   add_index "obats", ["grup_obat_id"], name: "index_obats_on_grup_obat_id", using: :btree
-  add_index "obats", ["jenis_obat_id"], name: "index_obats_on_jenis_obat_id", using: :btree
   add_index "obats", ["kategori_obat_id"], name: "index_obats_on_kategori_obat_id", using: :btree
   add_index "obats", ["kemasan_id"], name: "index_obats_on_kemasan_id", using: :btree
   add_index "obats", ["pabrik_id"], name: "index_obats_on_pabrik_id", using: :btree
@@ -162,6 +165,25 @@ ActiveRecord::Schema.define(version: 20160425034446) do
   add_index "stocks", ["obat_id"], name: "index_stocks_on_obat_id", using: :btree
   add_index "stocks", ["outlet_id"], name: "index_stocks_on_outlet_id", using: :btree
 
+  create_table "trans_types", primary_key: "ttype_id", force: :cascade do |t|
+    t.string   "ttype_name", limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "transaksi_asks", primary_key: "transask_id", force: :cascade do |t|
+    t.integer  "sender_id",     limit: 4
+    t.integer  "receiver_id",   limit: 4
+    t.integer  "trans_type_id", limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.boolean  "trans_status"
+  end
+
+  add_index "transaksi_asks", ["receiver_id"], name: "index_transaksi_asks_on_receiver_id", using: :btree
+  add_index "transaksi_asks", ["sender_id"], name: "index_transaksi_asks_on_sender_id", using: :btree
+  add_index "transaksi_asks", ["trans_type_id"], name: "index_transaksi_asks_on_trans_type_id", using: :btree
+
   create_table "users", primary_key: "user_id", force: :cascade do |t|
     t.integer  "role_id",                limit: 4
     t.integer  "position_id",            limit: 4
@@ -190,12 +212,13 @@ ActiveRecord::Schema.define(version: 20160425034446) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
+  add_foreign_key "dtrans_asks", "obats", primary_key: "obat_id"
+  add_foreign_key "dtrans_asks", "transaksi_asks", primary_key: "transask_id"
   add_foreign_key "kreditur_pabriks", "krediturs", primary_key: "kreditur_id"
   add_foreign_key "kreditur_pabriks", "pabriks", primary_key: "pabrik_id"
   add_foreign_key "obats", "dosages", primary_key: "dosage_id"
   add_foreign_key "obats", "generiks", primary_key: "generik_id"
   add_foreign_key "obats", "grup_obats", primary_key: "gobat_id"
-  add_foreign_key "obats", "jenis_obats", primary_key: "jobat_id"
   add_foreign_key "obats", "kategori_obats", primary_key: "kobat_id"
   add_foreign_key "obats", "kemasans", primary_key: "kemasan_id"
   add_foreign_key "obats", "pabriks", primary_key: "pabrik_id"

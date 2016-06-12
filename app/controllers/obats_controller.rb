@@ -5,7 +5,6 @@ class ObatsController < ApplicationController
   before_action :set_gobats, only: [:new, :create, :edit, :update, :index]
   before_action :set_generiks, only: [:new, :create, :edit, :update, :index]
   before_action :set_dosages, only: [:new, :create, :edit, :update, :index]
-  before_action :set_jobats, only: [:new, :create, :edit, :update, :index]
   before_action :set_raciks, only: [:new, :create, :edit, :update, :index]
   before_action :set_kobats, only: [:new, :create, :edit, :update, :index]
   before_action :set_kemasans, only: [:new, :create, :edit, :update, :index]
@@ -78,15 +77,11 @@ class ObatsController < ApplicationController
     end
 
     def set_generiks
-      @generiks = Generik.all
+      @generiks = Generik.order(generik_name: :asc)
     end
 
     def set_dosages
       @dosages = Dosage.all
-    end
-
-    def set_jobats
-      @jobats = JenisObat.all
     end
 
     def set_raciks
@@ -94,7 +89,7 @@ class ObatsController < ApplicationController
     end
 
     def set_kobats
-      @kobats = KategoriObat.all
+      @kobats = KategoriObat.order(kobat_name: :asc)
     end
 
     def set_kemasans
@@ -106,6 +101,6 @@ class ObatsController < ApplicationController
     end
 
     def obat_params
-      params.require(:obat).permit(:obat_name, :obat_minStock, :obat_hpp, :obat_hna, :obat_kons, :obat_askes, :obat_hnask, :obat_hnahppn, :obat_hnaskppn, :obat_hja, :grup_obat_id, :generik_id, :dosage_id, :jenis_obat_id, :racik_id, :kategori_obat_id, :kemasan_id, :pabrik_id)
+      params.require(:obat).permit(:obat_name, :obat_minStock, :obat_hpp, :obat_hna, :obat_kons, :obat_askes, :obat_hnask, :obat_hnahppn, :obat_hnaskppn, :obat_hja, :grup_obat_id, :generik_id, :dosage_id, :racik_id, :kategori_obat_id, :kemasan_id, :pabrik_id)
     end
 end
