@@ -1,0 +1,84 @@
+<p id="notice"><%= notice %></p>
+
+<h3 align="center"><b>Transaksi <i>Dropping</i> Obat</b></h3><br/><br/>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr align="center">
+      <th style="text-align:center">Apotek Asal</th>
+      <th style="text-align:center">Tanggal</th>
+      <th style="text-align:center">Status</th>
+      <th colspan="1" style="text-align:center">Aksi</th>
+    </tr>
+  </thead>
+
+  <tbody id="tabelTransDrop" class="isiTransDrop">
+    <% @transaksi_drops.each do |transaksi_drop| %>
+      <tr>
+        <td><%= Outlet.find(transaksi_drop.sender_id).outlet_name %></td>
+        <td><%= transaksi_drop.created_at.strftime('%d-%B-%Y %H:%M') %></td>
+        <td><%= transaksi_drop.trans_status.nil? ? "Belum Tervalidasi" : "Tervalidasi" %></td>
+        <td>
+          <%= link_to transaksi_drop_path(transaksi_drop), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} do %> <span class="fa fa-eye"></span> Lihat<% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr align="center">
+      <th style="text-align:center">Apotek Asal</th>
+      <th style="text-align:center">Tanggal</th>
+      <th style="text-align:center">Status</th>
+      <th colspan="1" style="text-align:center">Aksi</th>
+    </tr>
+  </thead>
+
+  <tbody id="tabelTransDrop" class="isiTransDrop">
+    <% @transaksi_asks.each do |transaksi_ask| %>
+      <tr>
+        <td><%= Outlet.find(transaksi_ask.sender_id).outlet_name %></td>
+        <td><%= transaksi_ask.created_at.strftime('%d-%B-%Y %H:%M') %></td>
+        <td><%= transaksi_ask.trans_status.nil? ? "Belum Tervalidasi" : "Tervalidasi" %></td>
+        <td>
+          <%= link_to transaksi_ask_path(transaksi_ask), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} do %> <span class="fa fa-eye"></span> Lihat<% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<div class="modal fade" id="transDropModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog"style="max-width:700px">
+    <div class="modal-content">
+      <div class="modal-header" align="center">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-isi"></div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="transAskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog"style="max-width:700px">
+    <div class="modal-content">
+      <div class="modal-header" align="center">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-isi"></div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="kpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog"style="width:450px">
+      <div class="modal-content">
+        <div class="modal-header" align="center">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel"></h4>
+        </div>
+        <div class="modal-isi"></div>
+      </div>
+    </div>
+  </div>

@@ -1,3 +1,10 @@
+$('#transAskModal').modal({backdrop: 'static', keyboard: false}) 
 $('#transAskModal').modal('show');
-$('#transAskModal .modal-title').html("Detail Transaksi Permintaan Obat");
-$('#transAskModal .modal-isi').html("<%= render partial: 'dtrans_asks/index' %>");
+$('#transAskModal .modal-title').html("Detail Transaksi Permintaan Obat "+
+	" <% if @transaksi_ask.trans_status.nil? %>"+
+		" <%= escape_javascript(link_to 'Tambah baru', new_transaksi_ask_dtrans_ask_path(@transaksi_ask), class: 'btn btn-sm btn-default', remote: true) %> "+
+		" <%= escape_javascript(link_to 'Validasi', validate_transaksi_ask_path(@transaksi_ask), class: 'btn btn-sm btn-danger', remote: true) %> "+
+	" <% else %>"+
+	" <%= escape_javascript(link_to 'Buat Dropping', new_transaksi_drop_path(transaksi_ask: @transaksi_ask), class: 'btn btn-sm btn-default') %>"+
+	" <% end %>");
+$('#transAskModal .modal-isi').html("<%= escape_javascript(render partial: 'dtrans_asks/index') %>");

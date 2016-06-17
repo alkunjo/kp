@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611050653) do
+ActiveRecord::Schema.define(version: 20160616042915) do
 
   create_table "dosages", primary_key: "dosage_id", force: :cascade do |t|
     t.string   "dosage_name",  limit: 255
@@ -21,15 +21,28 @@ ActiveRecord::Schema.define(version: 20160611050653) do
   end
 
   create_table "dtrans_asks", id: false, force: :cascade do |t|
+    t.integer  "dta_qty",          limit: 4
     t.integer  "transaksi_ask_id", limit: 4, default: 0, null: false
     t.integer  "obat_id",          limit: 4, default: 0, null: false
-    t.integer  "dta_qty",          limit: 4
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
   end
 
   add_index "dtrans_asks", ["obat_id"], name: "index_dtrans_asks_on_obat_id", using: :btree
   add_index "dtrans_asks", ["transaksi_ask_id"], name: "index_dtrans_asks_on_transaksi_ask_id", using: :btree
+
+  create_table "dtrans_drops", id: false, force: :cascade do |t|
+    t.integer  "dtd_req",           limit: 4
+    t.integer  "dtd_qty",           limit: 4
+    t.string   "dtd_rsn",           limit: 255
+    t.integer  "transaksi_drop_id", limit: 4,   default: 0, null: false
+    t.integer  "obat_id",           limit: 4,   default: 0, null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  add_index "dtrans_drops", ["obat_id"], name: "index_dtrans_drops_on_obat_id", using: :btree
+  add_index "dtrans_drops", ["transaksi_drop_id"], name: "index_dtrans_drops_on_transaksi_drop_id", using: :btree
 
   create_table "generiks", primary_key: "generik_id", force: :cascade do |t|
     t.string   "generik_name", limit: 255
@@ -184,6 +197,17 @@ ActiveRecord::Schema.define(version: 20160611050653) do
   add_index "transaksi_asks", ["sender_id"], name: "index_transaksi_asks_on_sender_id", using: :btree
   add_index "transaksi_asks", ["trans_type_id"], name: "index_transaksi_asks_on_trans_type_id", using: :btree
 
+  create_table "transaksi_drops", primary_key: "transdrop_id", force: :cascade do |t|
+    t.boolean  "trans_status"
+    t.integer  "sender_id",    limit: 4
+    t.integer  "receiver_id",  limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "transaksi_drops", ["receiver_id"], name: "index_transaksi_drops_on_receiver_id", using: :btree
+  add_index "transaksi_drops", ["sender_id"], name: "index_transaksi_drops_on_sender_id", using: :btree
+
   create_table "users", primary_key: "user_id", force: :cascade do |t|
     t.integer  "role_id",                limit: 4
     t.integer  "position_id",            limit: 4
@@ -214,6 +238,8 @@ ActiveRecord::Schema.define(version: 20160611050653) do
 
   add_foreign_key "dtrans_asks", "obats", primary_key: "obat_id"
   add_foreign_key "dtrans_asks", "transaksi_asks", primary_key: "transask_id"
+  add_foreign_key "dtrans_drops", "obats", primary_key: "obat_id"
+  add_foreign_key "dtrans_drops", "transaksi_drops", primary_key: "transdrop_id"
   add_foreign_key "kreditur_pabriks", "krediturs", primary_key: "kreditur_id"
   add_foreign_key "kreditur_pabriks", "pabriks", primary_key: "pabrik_id"
   add_foreign_key "obats", "dosages", primary_key: "dosage_id"

@@ -1,0 +1,12 @@
+<% @transaksi_ask.dtrans_asks.each do |dtrans_ask| %>
+	<tr>
+  	<td><%= Obat.find(dtrans_ask.obat_id).obat_name %></td>
+    <td><%= dtrans_ask.dta_qty %></td>
+  <%if current_user.gudang? %>
+  	<td><%= Stock.where(outlet_id: current_user.outlet_id).where(obat_id: dtrans_ask.obat_id).first.stok_qty %></td>
+  <% end %>
+  <% if @transaksi_ask.trans_status.nil? %>
+    <td><%= link_to [dtrans_ask.transaksi_ask, dtrans_ask], method: :delete, :class => "btn btn-danger btn-sm", remote: true do %><span class="fa fa-trash-o"></span> Hapus<% end %></td>
+  <% end %>
+  </tr>
+<% end %>

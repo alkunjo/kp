@@ -1,0 +1,8 @@
+<% @transaksi_drop.dtrans_drops.each do |dtrans_drop| %>
+	<tr>
+  	<td><%= Obat.find(dtrans_drop.obat_id).obat_name %></td>
+    <td><%= dtrans_drop.dtd_req %></td>
+    <td><%= dtrans_drop.dtd_qty %></td>
+    <td><%= dtrans_drop.dtd_rsn %></td>
+  </tr>
+<% end %>

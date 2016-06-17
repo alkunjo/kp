@@ -8,18 +8,14 @@
     <thead>
       <tr>
         <th>Obat</th>
-        <th>Kuantitas Diminta</th>
-       <% if current_user.gudang? %>
-        <th>Stok Gudang</th>
-       <% end %>
-       <% if @transaksi_ask.trans_status.nil? %>
-          <th colspan="3">Aksi</th>
-       <% end %>
+        <th>Kuantitas Permintaan</th>
+        <th>Kuantitas Beri</th>
+        <th>Alasan</th>
       </tr>
     </thead>
 
     <tbody id="dta_tbl">
-      <%= render partial: "dtrans_asks/index2" %>
+      <%= render partial: "dtrans_drops/index2" %>
     </tbody>
   </table>
   

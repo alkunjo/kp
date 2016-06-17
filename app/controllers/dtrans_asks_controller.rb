@@ -1,61 +1,62 @@
 class DtransAsksController < ApplicationController
-  before_action :set_dtrans_ask, only: [:show, :edit, :update, :destroy]
-  before_action :set_transaksi_ask, only: [:index, :new, :edit, :create, :update, :destroy]
-  
+  before_action :set_transaksi_ask, only: [:index, :new, :create, :destroy]
+  before_action :set_obats, only: [:index, :new]
+  autocomplete :obat, :obat_name, full: true
+
   def index
+    @transaksi_ask = TransaksiAsk.find(params[:transaksi_ask_id])
     @dtrans_asks = @transaksi_ask.dtrans_asks.present?
+    @dtrans_ask = @transaksi_ask.dtrans_asks.find(params[:id])
   end
 
   def new
-    @transaksi_ask = TransaksiAsk.find_by_id(params[:transask_id])
-    @dtrans_ask = @transaksi_ask.dtrans_asks.build
-    @obats = Obat.all
-    respond_to do |format|
-      format.js {render action: "new"}
-    end
-  end
+    transaksi_ask = TransaksiAsk.find(params[:transaksi_ask_id])
+    @dtrans_asks = transaksi_ask.dtrans_asks.present?
+    @dtrans_ask = transaksi_ask.dtrans_asks.build
 
-  def edit
+    respond_to do |format|
+      format.js {render action: 'new'}
+    end
   end
 
   def create
-    @dtrans_ask = @transaksi_ask.dtrans_asks.create(dtrans_ask_params)
+    dtrans_ask = DtransAsk.new(dtrans_ask_params)
+    transaksi_ask = TransaksiAsk.find(params[:transaksi_ask_id])
+    obat = Obat.find_by_obat_name(dtrans_ask.obat_name)
+    @dtrans_ask = transaksi_ask.dtrans_asks.create(dta_qty: dtrans_ask.dta_qty, obat_id: obat.obat_id, transaksi_ask_id: transaksi_ask.transask_id)
 
     respond_to do |format|
       if @dtrans_ask.save
-        format.js {render action: "save"}
-      else
-        format.js {render action: "new"}
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @dtrans_ask.update(dtrans_ask_params)
-        return new
+        format.js {render "save"}
+      else 
+        format.js {render "new" }
       end
     end
   end
 
   def destroy
-    @dtrans_ask = @transaksi_ask.dtrans_asks.find(params[:id])
+    transaksi_ask = TransaksiAsk.find(params[:transaksi_ask_id])
+    @dtrans_ask = transaksi_ask.dtrans_asks.find(params[:id])
     @dtrans_ask.destroy
     respond_to do |format|
-      format.js {render action: "save"}
+      format.js {render "save"}
     end
   end
 
   private
+    def set_transaksi_ask
+      @transaksi_ask = TransaksiAsk.find(params[:transaksi_ask_id])  
+    end
+
     def set_dtrans_ask
       @dtrans_ask = DtransAsk.find(params[:id])
     end
 
-    def set_transaksi_ask
-      @transaksi_ask = TransaksiAsk.find(params[:transask_id])
+    def set_obats
+      @obats = Obat.all
     end
 
     def dtrans_ask_params
-      params.require(:dtrans_ask).permit(:dta_qty, :transaksi_ask_id, :obat_id)
+      params.require(:dtrans_ask).permit(:dta_qty, :transaksi_ask_id, :obat_id, :obat_name)
     end
 end

@@ -93,7 +93,9 @@
   <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
       <ul class="nav" id="side-menu">
-        <li><a href="#"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a></li>
+        <li><%= link_to dashboard_index_path, :class => current_class?(dashboard_index_path) do %><i class="fa fa-dashboard fa-fw"></i>Dashboard<% end %></li>
+
+        <% if can? :manage, :all %>
         <li>
           <a data-toggle="collapse" data-parent="side-menu" href="#drugs"><i class="fa fa-medkit fa-fw"></i>Master Obat<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level collapse in" id="drugs">
@@ -118,6 +120,7 @@
           </ul>
           <!-- /.nav-second-level -->
         </li>
+
         <li>
           <a data-toggle="collapse" data-parent="side-menu" href="#user"><i class="fa fa-user fa-fw"></i>Master Pengguna<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level collapse in" id="report">
@@ -127,10 +130,12 @@
           </ul>
           <!-- /.nav-second-level -->
         </li>
+        <% end %>
         <li>
           <a data-toggle="collapse" data-parent="side-menu" href="#trans"><i class="fa fa-money fa-fw"></i>Transaksi<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level collapse in" id="trans">
             <li><%= link_to "Transaksi Permintaan", transaksi_asks_path, :class => current_class?(transaksi_asks_path) %></li>
+            <li><%= link_to "Transaksi Dropping", transaksi_drops_path, :class => current_class?(transaksi_drops_path) %></li>
             
           </ul>
           <!-- /.nav-second-level -->

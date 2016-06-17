@@ -1,0 +1,2 @@
+module DtransDropsHelper
+end

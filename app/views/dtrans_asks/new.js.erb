@@ -1,2 +1,2 @@
-$("#dtaTabel").html("<%= escape_javascript(render 'index') %>")
-$('#form').html("<%= escape_javascript(render action: :new, partial: 'form') %>")
+$('#dta_form').html("<%= escape_javascript(render partial: 'dtrans_asks/form') %>")
+$('#dta_tbl').html("<%= escape_javascript(render partial: 'dtrans_asks/index2') %>")

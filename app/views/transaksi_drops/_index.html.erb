@@ -1,10 +1,9 @@
-<% @transaksi_asks.each do |transaksi_ask| %>
+<% @trans.each do |transaksi_ask| %>
   <tr>
-  	<td><%= Outlet.find(transaksi_ask.receiver_id).outlet_name %></td>
+  	<td><%= Outlet.find(transaksi_ask.sender_id).outlet_name %></td>
   	<td><%= transaksi_ask.created_at.strftime('%d-%B-%Y %H:%M') %></td>
   	<td><%= transaksi_ask.trans_status.nil? ? "Belum Tervalidasi" : "Tervalidasi" %></td>
     <td>
     	<%= link_to transaksi_ask_path(transaksi_ask), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} do %> <span class="fa fa-eye"></span> Lihat<% end %>
-    	<%= link_to 'Hapus', del_transaksi_ask_path(transaksi_ask), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
   </tr>
 <% end %>

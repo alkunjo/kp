@@ -27,10 +27,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    return dosages_path
+    return dashboard_index_path
   end
 
   def after_sign_out_path_for(resource)
+    flash[:error] = "Access denied!"
     return new_user_session_path
   end
 end

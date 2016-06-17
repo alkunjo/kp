@@ -1,18 +1,15 @@
 Rails.application.routes.draw do  
-  resources :transaksi_asks do
-    resources :dtrans_asks  
-    get :autocomplete_outlet_outlet_name, on: :collection
+  devise_for :users
+  scope "/admin" do
+    resources :users
   end
 
   resources :trans_types
+
   resources :stocks do
     get :autocomplete_outlet_outlet_name, on: :collection
     get :autocomplete_obat_obat_name, on: :collection
     collection {post :import}
-  end
-  devise_for :users
-  scope "/admin" do
-    resources :users
   end
   
   resources :users do
@@ -35,28 +32,49 @@ Rails.application.routes.draw do
   end
   
   resources :positions
+
   resources :outlet_types
+
   resources :generiks do
     collection { post :import}
   end
+
   resources :raciks
+
   resources :kategori_obats do
     collection {post :import}
   end
+  
+  resources :transaksi_asks do
+    resources :dtrans_asks do
+      get :autocomplete_obat_obat_name, on: :collection
+    end
+    get :autocomplete_outlet_outlet_name, on: :collection
+    get :validate, on: :member
+  end
+  
+  resources :transaksi_drops do
+    resources :dtrans_drops  
+    get :autocomplete_outlet_outlet_name, on: :collection
+    get :validate, on: :member
+    collection {post :make}
+  end
+
   resources :pabriks do
     resources :kreditur_pabriks
   end
+
   resources :grup_obats do
     collection {post :import}
   end
+
   resources :kemasans
+
   resources :dosages do
     collection { post :import }
   end
 
-  resources :transaksi_drops do
-      get :autocomplete_outlet_outlet_name, on: :collection
-  end
+  resources :dashboard
 
   get 'dosages/:id/del' => 'dosages#del', as: :del_dosage
   get 'kemasans/:id/del' => 'kemasans#del', as: :del_kemasan
@@ -77,7 +95,7 @@ Rails.application.routes.draw do
   get 'transaksi_ask/:id/del' => 'transaksi_ask#del', as: :del_transaksi_ask
   get 'transaksi_drop/:id/del' => 'transaksi_drop#del', as: :del_transaksi_drop
   
-  root to: "dosages#index"
+  root to: "dashboard#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
