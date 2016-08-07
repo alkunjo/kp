@@ -1,6 +1,0 @@
-<% @ttypes.each do |ttype| %>
-  <tr>
-  	<td><%= ttype.ttype_name %></td>
-    <td><%= link_to 'Hapus', del_ttype_path(ttype), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
-  </tr>
-<% end %>

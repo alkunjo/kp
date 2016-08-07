@@ -8,6 +8,13 @@ class PabriksController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.js {render "show"}
+      format.pdf do 
+        pdf = PabrikPdf.new(@pabrik)
+        send_data pdf.render, filename: "pabrik_#{@pabrik.pabrik_id}.pdf", type: "application/pdf", disposition: "inline"
+      end
+    end
   end
 
   def new

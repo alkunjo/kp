@@ -1,0 +1,47 @@
+<div class="container" style="max-width:400px">
+<%= form_for([@dtran.transaksi, @dtran], remote: true) do |f| %>
+  <% if @dtran.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dtran.errors.count, "error") %> prohibited this dtran from being saved:</h2>
+
+      <ul>
+      <% @dtran.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<!-- 
+  <div class="row">
+    <div class="col-sm-4">
+      <%= f.label :obat %><br>
+      <%= f.text_field :dta_qty, class: "form-control", readonly: true, value: Obat.find(@dtran.obat_id).obat_name %>
+    </div>
+    <div class="col-sm-4">
+      <%= f.label :permintaan %>
+      <%= f.text_field :dta_qty, class: "form-control", readonly: true, value: @dtran.dta_qty %>
+    </div>
+    <div class="col-sm-4">
+      <%= f.label :stok %><br>
+      <%= f.text_field :stok, class: "form-control", readonly: true, value: Stock.where(obat_id: @dtran.obat_id).where(outlet_id: current_user.outlet_id).first.stok_qty %>
+    </div>
+  </div>
+ -->
+  <div class="row">
+    <div class="col-sm-4">
+      <%= f.label :kuantitas_beri %><br>
+      <%= f.text_field :dtd_qty, class: "form-control" %>
+    </div>
+    <div class="col-sm-3">
+      <%= f.label :alasan %>
+      <%= f.text_field :dt_rsn, class: "form-control" %>
+    </div>
+    <div class="col-sm-2" style="margin-top:25px;margin-right:10px">
+      <%= f.submit "Tambah", class: "btn btn-sm btn-primary" %>
+    </div>
+    <div class="col-sm-2" style="margin-top:25px">
+      <button class="btn btn-sm btn-danger" onclick="">Batal</button>
+    </div>
+  </div>
+<% end %>
+</div>

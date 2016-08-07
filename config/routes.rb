@@ -1,10 +1,41 @@
 Rails.application.routes.draw do  
+  resources :transaksis do
+    resources :dtrans do
+      get :autocomplete_obat_obat_name, on: :collection
+      get :index_a, on: :collection
+      get :index_d, on: :collection
+    end
+    member do
+      get 'show_a'
+      get 'show_d'
+      get 'bpba'
+      get 'drop'
+      get 'validate_a'
+      get 'valdrop'
+      get 'validate_d'
+      get 'del'
+    end
+    collection do
+      get :autocomplete_outlet_outlet_name
+      get :index_a
+      get :index_b
+    end
+  end
+  
+  resources :obat_ins do
+    member do
+      get 'trimo'
+    end
+    collection do
+      post 'kirim'
+    end
+  end
+
   devise_for :users
   scope "/admin" do
     resources :users
   end
 
-  resources :trans_types
 
   resources :stocks do
     get :autocomplete_outlet_outlet_name, on: :collection
@@ -44,21 +75,6 @@ Rails.application.routes.draw do
   resources :kategori_obats do
     collection {post :import}
   end
-  
-  resources :transaksi_asks do
-    resources :dtrans_asks do
-      get :autocomplete_obat_obat_name, on: :collection
-    end
-    get :autocomplete_outlet_outlet_name, on: :collection
-    get :validate, on: :member
-  end
-  
-  resources :transaksi_drops do
-    resources :dtrans_drops  
-    get :autocomplete_outlet_outlet_name, on: :collection
-    get :validate, on: :member
-    collection {post :make}
-  end
 
   resources :pabriks do
     resources :kreditur_pabriks
@@ -91,9 +107,6 @@ Rails.application.routes.draw do
   get 'roles/:id/del' => 'roles#del', as: :del_role
   get 'users/:id/del' => 'users#del', as: :del_user
   get 'stocks/:id/del' => 'stocks#del', as: :del_stock
-  get 'trans_type/:id/del' => 'trans_type#del', as: :del_ttype
-  get 'transaksi_ask/:id/del' => 'transaksi_ask#del', as: :del_transaksi_ask
-  get 'transaksi_drop/:id/del' => 'transaksi_drop#del', as: :del_transaksi_drop
   
   root to: "dashboard#index"
   # The priority is based upon order of creation: first created -> highest priority.
