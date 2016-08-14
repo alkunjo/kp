@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
   def admin?
     self.role.role_name == "Admin"
   end
+
+  def not_admin?
+    self.role.role_name != "Admin"
+  end
   
   def manager?
     self.role.role_name == "Manager"
@@ -28,6 +32,14 @@ class User < ActiveRecord::Base
 
   def gudang?
     self.role.role_name == "Gudang"
+  end
+
+  def admin_gudang?
+    self.role.role_name == "Admin Gudang"
+  end
+
+  def not_admin_gudang?
+    self.role.role_name != "Admin Gudang"
   end
 
   def self.to_csv(options = {})

@@ -43,18 +43,6 @@ class ObatInsController < ApplicationController
 		# end
 		
 		# @tran = Transaksi.find(params[:id])
-		# @tran.update_attributes(:trans_status => 3, :accepted_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
-		# if @tran
-		# 	@dtrans = @tran.dtrans
-		# 	@dtrans.each do |dtran|
-		# 		@stok = Stock.where(outlet_id: @tran.sender_id, obat_id: dtran.obat_id).first
-		# 		stok = @stok.stok_qty + dtran.dtt_qty
-		# 		@stok.update_column(:stok_qty, stok)
-		# 	end
-		# 	respond_to do |format|
-		# 		format.js {render "accept"}
-		# 	end
-		# end
 	end
 
 	def kirim
@@ -76,12 +64,19 @@ class ObatInsController < ApplicationController
 		end
 	end
 
-	def trimo
+	def valter
 		@tran = Transaksi.find(params[:id])
-		respond_to do |format|
-			if @tran
-				format.js {render 'terima'}	
+		@tran.update_attributes(:trans_status => 3, :accepted_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
+		if @tran
+			@dtrans = @tran.dtrans
+			@dtrans.each do |dtran|
+				@stok = Stock.where(outlet_id: @tran.sender_id, obat_id: dtran.obat_id).first
+				trima = dtran.dtt_qty.present? ? dtran.dtt_qty : 0				
+				stok = @stok.stok_qty + trima
+				@stok.update_column(:stok_qty, stok)
 			end
+
+			redirect_to stocks_url
 		end
 	end
 

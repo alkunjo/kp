@@ -14,7 +14,7 @@ class Ability
       can :create, :read, Transaksi
     elsif user.gudang?
       can :read, Obat
-      can :read, Stock
+      can :read, :update, Stock
       can :read, :update, Transaksi
     end
   end

@@ -76,7 +76,12 @@ class StocksController < ApplicationController
     end
 
     def set_stocks
-      @stocks = Stock.paginate(:page => params[:page], :per_page => 10)
+      if current_user.admin?
+        @stocks = Stock.paginate(:page => params[:page], :per_page => 10, :order => 'updated_at')
+      elsif current_user.not_admin?
+        @stocks = Stock.where(outlet_id: current_user.outlet_id).order(:updated_at).paginate(:page => params[:page], :per_page => 10)
+      end
+      # @stocks = Stock.paginate(:page => params[:page], :per_page => 10)
     end
 
     def set_obats

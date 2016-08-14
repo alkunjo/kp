@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   
   resources :obat_ins do
     member do
-      get 'trimo'
+      get 'valter'
     end
     collection do
       post 'kirim'

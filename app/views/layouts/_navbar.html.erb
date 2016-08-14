@@ -96,21 +96,29 @@
       <ul class="nav" id="side-menu">
         <li><%= link_to dashboard_index_path, :class => current_class?(dashboard_index_path) do %><i class="fa fa-dashboard fa-fw"></i>Dashboard<% end %></li>
 
-        <% if can? :manage, :all %>
         <li>
           <a data-toggle="collapse" data-parent="side-menu" href="#drugs"><i class="fa fa-medkit fa-fw"></i>Master Obat<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level collapse in" id="drugs">
+            <% if can? :manage, :all %>
             <li><%= link_to "Obat", obats_path, :class => current_class?(obats_path) %></li>
+            <% end %>
+            
+            
             <li><%= link_to "Stock", stocks_path, :class => current_class?(stocks_path) %></li>
+            
+
+            <% if can? :manage, :all %>
             <li><%= link_to "Dosis", dosages_path, :class => current_class?(dosages_path) %></li>
             <li><%= link_to "Generik", generiks_path, :class => current_class?(generiks_path) %></li>
             <li><%= link_to "Grup Obat", grup_obats_path, :class => current_class?(grup_obats_path) %></li>
             <li><%= link_to "Kategori Obat", kategori_obats_path, :class => current_class?(kategori_obats_path) %></li>
             <li><%= link_to "Kemasan", kemasans_path, :class => current_class?(kemasans_path) %></li>
             <li><%= link_to "Racikan", raciks_path, :class => current_class?(raciks_path) %></li>
+            <% end %>
           </ul>
           <!-- /.nav-second-level -->
         </li>
+        <% if can? :manage, :all %>
         <li>
           <a data-toggle="collapse" data-parent="side-menu" href="#entity"><i class="fa fa-building fa-fw"></i>Master Entitas<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level collapse in" id="entity">
