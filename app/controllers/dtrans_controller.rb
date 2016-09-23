@@ -10,15 +10,6 @@ class DtransController < ApplicationController
     @dtran = @transaksi.dtrans.find(params[:id])
   end
 
-  def index_a
-    
-  end
-
-  def index_d
-    @transaksi = Transaksi.find(params[:transaksi_id])
-    @dtrans = @transaksi.dtrans
-  end
-
   def new
     transaksi = Transaksi.find(params[:transaksi_id])
     @dtrans = transaksi.dtrans.present?
@@ -33,14 +24,24 @@ class DtransController < ApplicationController
     dtran = Dtran.new(dtran_params)
     transaksi = Transaksi.find(params[:transaksi_id])
     obat = Obat.find_by_obat_name(dtran.obat_name)
-    @dtran = @transaksi.dtrans.create(dta_qty: dtran.dta_qty, obat_id: obat.obat_id, transaksi_id: transaksi.transaksi_id)
+    exist = Dtran.where(transaksi_id: transaksi.transaksi_id, obat_id: obat.obat_id).first
+    if exist
+    	exist.update_attribute(:dta_qty, (exist.dta_qty + dtran.dta_qty))
+	    if exist.save
+    		respond_to do |format|
+	        format.js {render "save_ask"}
+	      end
+	    end
+    else
+	    @dtran = @transaksi.dtrans.create(dta_qty: dtran.dta_qty, obat_id: obat.obat_id, transaksi_id: transaksi.transaksi_id)
 
-    respond_to do |format|
-      if @dtran.save
-        format.js {render "save"}
-      else
-        format.js {render "new"}
-      end
+	    respond_to do |format|
+	      if @dtran.save
+	        format.js {render "save_ask"}
+	      else
+	        format.js {render "new"}
+	      end
+	    end
     end
   end
 
@@ -62,12 +63,12 @@ class DtransController < ApplicationController
     if (stok.stok_qty - beri) < obat.obat_minStock #jika sisa stok yang diberikan kurang dari stok minimum
       flash.now[:danger] = "Jumlah beri melebihi stok minimum"
       respond_to do |format|
-        format.js {render 'warn'}  
+        format.js {render 'save_drop'}  
       end
     elsif beri > @dtran.dta_qty
       flash.now[:danger] = "Jumlah beri melebihi yang diminta"
       respond_to do |format|
-        format.js {render 'warn'}  
+        format.js {render 'save_drop'}  
       end
     else
       @dtran.update(dtran_params)
@@ -76,7 +77,7 @@ class DtransController < ApplicationController
       end
       flash.now[:success] = "Dropping obat berhasil ditambahkan"
       respond_to do |format|
-        format.js { render 'warn'}
+        format.js { render 'save_drop'}
         #format.js { render 'save'}
       end
     end
@@ -86,7 +87,7 @@ class DtransController < ApplicationController
     @dtran = @transaksi.dtrans.find(params[:id])
     @dtran.destroy
     respond_to do |format|
-      format.js {render "save"}
+      format.js {render "save_ask"}
     end
   end
 

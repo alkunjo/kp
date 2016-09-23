@@ -11,22 +11,6 @@
       </ul>
     </div>
   <% end %>
-<!-- 
-  <div class="row">
-    <div class="col-sm-4">
-      <%= f.label :obat %><br>
-      <%= f.text_field :dta_qty, class: "form-control", readonly: true, value: Obat.find(@dtran.obat_id).obat_name %>
-    </div>
-    <div class="col-sm-4">
-      <%= f.label :permintaan %>
-      <%= f.text_field :dta_qty, class: "form-control", readonly: true, value: @dtran.dta_qty %>
-    </div>
-    <div class="col-sm-4">
-      <%= f.label :stok %><br>
-      <%= f.text_field :stok, class: "form-control", readonly: true, value: Stock.where(obat_id: @dtran.obat_id).where(outlet_id: current_user.outlet_id).first.stok_qty %>
-    </div>
-  </div>
- -->
   <div class="row">
     <div class="col-sm-4">
       <%= f.label :kuantitas_beri %><br>

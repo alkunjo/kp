@@ -143,16 +143,19 @@
         <li>
           <a data-toggle="collapse" data-parent="side-menu" href="#trans"><i class="fa fa-money fa-fw"></i>Transaksi<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level collapse in" id="trans">
-            <li><%= link_to "Transaksi", transaksis_path, :class => current_class?(transaksis_path) %></li>
-            <li><%= link_to "Penerimaan Obat", obat_ins_path, :class => current_class?(obat_ins_path) %></li>
+          	<% if current_user.pengadaan? || current_user.admin? %>
+            <li><%= link_to "Permintaan Obat", ask_transaksis_path, :class => current_class?(ask_transaksis_path) %></li>
+            <% end %><% if current_user.gudang? || current_user.admin? %>
+            <li><%= link_to "Dropping Obat", drop_transaksis_path, :class => current_class?(drop_transaksis_path) %></li>
+            <li><%= link_to "Penerimaan Obat", accept_transaksis_path, :class => current_class?(accept_transaksis_path) %></li><% end %>
           </ul>
           <!-- /.nav-second-level -->
         </li>
         <li>
           <a data-toggle="collapse" data-parent="side-menu" href="#report"><i class="fa fa-paperclip fa-fw"></i>Master Laporan<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level collapse in" id="report">
-            <li><%= link_to "Lapporan BPBA", "#" %></li>
-            <li><%= link_to "Lapporan Dropping", "#" %></li>
+            <li><%= link_to "Laporan Permintaan Obat", report_ask_transaksis_path, :class => current_class?(report_ask_transaksis_path) %></li>
+            <li><%= link_to "Laporan Dropping Obat", report_drop_transaksis_path, :class => current_class?(report_drop_transaksis_path) %></li>
           </ul>
           <!-- /.nav-second-level -->
         </li>

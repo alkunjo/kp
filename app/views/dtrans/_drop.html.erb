@@ -15,21 +15,15 @@
       <tr>
         <th>Obat</th>
         <th>Minta</th>
-       <% if current_user.gudang? %>
         <th>Stok Gudang</th>
-       <% end %>
-       <% if @transaksi.trans_status.nil? && current_user.pengadaan? %>
-          <th colspan="3">Aksi</th>
-       <% elsif @transaksi.trans_status == 1 && current_user.gudang? %>
-          <th>Beri</th>
-          <th>Alasan</th>
-          <th colspan="3">Aksi</th>
-       <% end %>
+        <th>Beri</th>
+        <th>Alasan</th>
+        <th colspan="3">Aksi</th>
       </tr>
     </thead>
 
     <tbody id="dta_tbl">
-      <%= render partial: "dtrans/index2" %>
+      <%= render partial: "dtrans/drop2" %>
     </tbody>
   </table>
   

@@ -41,6 +41,7 @@ gem 'iconv'
 gem 'roo-xls'
 gem 'spreadsheet'
 gem 'will_paginate-bootstrap'
+gem 'seed_dump'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

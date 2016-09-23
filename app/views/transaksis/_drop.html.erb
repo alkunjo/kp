@@ -21,11 +21,7 @@
   		<% end %>
   	</td>
     <td>
-      <% if current_user.pengadaan? %>
-        <%= link_to show_ask_transaksi_path(transaksi), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} do %> <span class="fa fa-eye"></span> Lihat<% end %>
-      <% elsif current_user.gudang? %>
-    	  <%= link_to show_drop_transaksi_path(transaksi), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} do %> <span class="fa fa-eye"></span> Lihat<% end %>
-      <% end %>
-    	</td>
+    	<%= link_to show_drop_transaksi_path(transaksi), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} do %> <span class="fa fa-eye"></span> Lihat<% end %>
+    </td>
   </tr>
 <% end %>

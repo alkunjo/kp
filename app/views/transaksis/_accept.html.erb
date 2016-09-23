@@ -1,0 +1,12 @@
+<% @dtrans.each do |dtran| %>
+  <tr>
+    <td align="center"><%= Obat.find(dtran.obat_id).obat_name %></td>
+  	<td align="center" id="dtd_<%= dtran.obat_id %>"><%= dtran.dtt_qty %> unit</td>
+    <% if dtran.transaksi.dropped? %>
+    <td align="center" id="edit_<%= dtran.obat_id %>" style="width:300px">
+      <%= link_to 'Ubah', edit_obat_in_path(dtran), class: "btn btn-sm btn-success", remote: true %>
+    </td>
+    <% end %>
+  </tr>
+<% end %>
+<!-- .nil? ? dtran.dtd_qty : (dtran.dtt_qty.nil? ? 0: dtran.dtt_qty) -->
