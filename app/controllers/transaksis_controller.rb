@@ -81,10 +81,12 @@ class TransaksisController < ApplicationController
 
   # ini digunakan untuk nyetak skrip per fungsi 
   def skrip_bpba
+  	@transaksi = Transaksi.find(params[:id])
     respond_to do |format|
-      format.pdf do
-        pdf = Prawn::Document.generate("bpba_#{@transaksi.transaksi_id}.pdf")
-        pdf.text "Halooooo"
+      format.pdf do 
+        pdf = BpbaPdf.new(@transaksi)
+        # pdf = Prawn::Document.new
+        send_data pdf.render, filename: "skrip_bpba_#{@transaksi.transaksi_id}.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end
@@ -151,16 +153,17 @@ class TransaksisController < ApplicationController
 				@stok = Stock.where(outlet_id: @tran.sender_id, obat_id: dtran.obat_id).first
 				trima = dtran.dtt_qty.present? ? dtran.dtt_qty : 0				
 				stok = @stok.stok_qty + trima
-				@stok.update_column(:stok_qty, stok)
+				@stok.update_attributes(:stok_qty => stok, :updated_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
+				# @stok.update_column(:stok_qty, stok)
 			end
 
-			respond_to do |format|
-				# flash.now[:success] = 'Stok obat berhasil ditambahkan'
-				format.js { render :js => "window.location.href = '#{stocks_path}'", notice: 'Stok obat berhasil ditambahkan' }
-			#   format.js {render inline: "location.reload();" }
-			end
-			# redirect_to stocks_path, format: :html
+			# respond_to do |format|
+			# 	format.js { render :js => "window.location.href = '#{stocks_path}'", notice: 'Stok obat berhasil ditambahkan' }
+			# end
 		end
+		flash[:success] = "Stok berhasil ditambahkan"
+		redirect_to stocks_url
+		# redirect_to url_for(:controller => :stocks, :action => :index)
   end
 
   def valdrop

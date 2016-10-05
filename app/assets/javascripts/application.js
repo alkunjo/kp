@@ -13,8 +13,10 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require dataTables/jquery.dataTables
 //= require autocomplete-rails
 //= require bootstrap
+//= require bootstrap-table
 //= require metisMenu.min
 //= require sb-admin-2
 //= require raphael-min

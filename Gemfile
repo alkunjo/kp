@@ -27,8 +27,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'bootstrap-sass'
+gem 'bootstrap-table-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'jquery-datatables-rails'
+gem 'ajax-datatables-rails'
+gem 'jquery-turbolinks'
 gem 'font-awesome-sass'
 gem 'paperclip'
 gem 'devise'

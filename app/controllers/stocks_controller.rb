@@ -1,4 +1,5 @@
 class StocksController < ApplicationController
+  helper_method :sort_column, :sort_direction
   autocomplete :outlet, :outlet_name, full: true
   autocomplete :obat, :obat_name, full: true
   before_filter :authenticate_user!
@@ -77,9 +78,9 @@ class StocksController < ApplicationController
 
     def set_stocks
       if current_user.admin?
-        @stocks = Stock.paginate(:page => params[:page], :per_page => 10, :order => 'updated_at')
+        @stocks = Stock.order("#{sort_column} #{sort_direction}").paginate(:page => params[:page], :per_page => 10)
       elsif current_user.not_admin?
-        @stocks = Stock.where(outlet_id: current_user.outlet_id).order(:updated_at).paginate(:page => params[:page], :per_page => 10)
+        @stocks = Stock.where(outlet_id: current_user.outlet_id).order("#{sort_column} #{sort_direction}").paginate(:page => params[:page], :per_page => 10)
       end
       # @stocks = Stock.paginate(:page => params[:page], :per_page => 10)
     end
@@ -90,5 +91,17 @@ class StocksController < ApplicationController
 
     def set_outlets
       @outlets = Outlet.all
+    end
+
+    def sortable_columns
+    	["outlet_id", "obat_id", "stok_qty", "stock_id", "outlet_name", "obat_name"]
+    end
+
+    def sort_column
+    	sortable_columns.include?(params[:column]) ? params[:column] : "obat_id"
+    end
+
+    def sort_direction
+    	%w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end

@@ -5,7 +5,7 @@
   	<td><%= dtran.stok %></td>
     <td><%= dtran.dtd_qty.nil? ? 0 : dtran.dtd_qty %></td>
     <td><%= dtran.dt_rsn %></td>
-    <% if dtran.enough? %>
+    <% if dtran.enough? && dtran.transaksi.asked? %>
     <td id="edit_<%= dtran.obat_id %>"><%= link_to "Drop", edit_transaksi_dtran_path(dtran.transaksi, dtran), class: 'btn btn-sm btn-default', remote: true %>
     </td>
     <% end %>

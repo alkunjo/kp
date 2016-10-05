@@ -2,9 +2,10 @@
   <tr>
   	<td><%= dosage.dosage_name %></td>
     <td><%= dosage.dosage_judul %></td>
-    <% if can? :manage, Dosage %>
-    <td><%= link_to 'Ubah', edit_dosage_path(dosage), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
-    <td><%= link_to 'Hapus', del_dosage_path(dosage), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
+    <% if current_user.admin? %>
+    <td>
+    		<%= link_to 'Ubah', edit_dosage_path(dosage), class: "btn btn-primary btn-sm", remote: true, html:{style: "color:#FFFFFF"} %> 
+    		<%= link_to 'Hapus', del_dosage_path(dosage), class: "btn btn-danger btn-sm", remote: true, html:{style: "color:#FFFFFF"} %></td>
     <% end %>
   </tr>
 <% end %>
