@@ -46,9 +46,10 @@ class TransaksisController < ApplicationController
 		@dtrans.each do	|dtran|
 			if dtran.dtt_qty.nil?
 				if dtran.dtd_qty.nil?
-					dtran.dtt_qty = 0	
-				else
-					dtran.dtt_qty = dtran.dtd_qty
+          dtran.update_attribute(:dtd_qty, 0) 
+          dtran.update_attribute(:dtt_qty, 0) 
+        else
+          dtran.update_attribute(:dtt_qty, dtran.dtd_qty)
 				end
 			end
 		end
@@ -86,16 +87,17 @@ class TransaksisController < ApplicationController
       format.pdf do 
         pdf = BpbaPdf.new(@transaksi)
         # pdf = Prawn::Document.new
-        send_data pdf.render, filename: "skrip_bpba_#{@transaksi.transaksi_id}.pdf", type: "application/pdf", disposition: "inline"
+        send_data pdf.render, filename: "B#{@transaksi.sender_id}#{@transaksi.receiver_id}#{@transaksi.created_at.strftime("%d%m%Y")}.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end
 
   def skrip_drop
+    @transaksi = Transaksi.find(params[:id])
     respond_to do |format|
       format.pdf do
-        pdf = Prawn::Document.generate("bpba_#{@transaksi.transaksi_id}.pdf")
-        pdf.text "Halooooo"
+        pdf = DropPdf.new(@transaksi)
+        send_data pdf.render, filename: "D#{@transaksi.sender_id}#{@transaksi.receiver_id}#{@transaksi.dropped_at.strftime("%d%m%Y")}.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end
@@ -104,8 +106,8 @@ class TransaksisController < ApplicationController
   	@transaksi = Transaksi.find(params[:id])
     respond_to do |format|
       format.pdf do
-        pdf = Prawn::Document.generate("bpba_#{@transaksi.transaksi_id}.pdf")
-        pdf.text "Halooooo"
+        pdf = AcceptPdf.new(@transaksi)
+        send_data pdf.render, filename: "T#{@transaksi.sender_id}#{@transaksi.receiver_id}#{@transaksi.accepted_at.strftime("%d%m%Y")}.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end
@@ -131,6 +133,9 @@ class TransaksisController < ApplicationController
         minta = dtran.dtd_qty.nil? ? 0 : dtran.dtd_qty
         hasil = stok.stok_qty - minta
         stok.update_attribute(:stok_qty, hasil)
+        if dtran.dtd_qty.nil? 
+          dtran.update_attribute(:dtd_qty, 0)
+        end
       end
       respond_to do |format|
         flash.now[:success] = "Validasi Dropping berhasil dilakukan"
@@ -154,16 +159,10 @@ class TransaksisController < ApplicationController
 				trima = dtran.dtt_qty.present? ? dtran.dtt_qty : 0				
 				stok = @stok.stok_qty + trima
 				@stok.update_attributes(:stok_qty => stok, :updated_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
-				# @stok.update_column(:stok_qty, stok)
 			end
-
-			# respond_to do |format|
-			# 	format.js { render :js => "window.location.href = '#{stocks_path}'", notice: 'Stok obat berhasil ditambahkan' }
-			# end
 		end
 		flash[:success] = "Stok berhasil ditambahkan"
 		redirect_to stocks_url
-		# redirect_to url_for(:controller => :stocks, :action => :index)
   end
 
   def valdrop
@@ -255,7 +254,7 @@ class TransaksisController < ApplicationController
       elsif current_user.pengadaan?
         @transaksis = Transaksi.where(sender_id: current_user.outlet_id)
       elsif current_user.gudang?
-        @transaksis = Transaksi.where(receiver_id: current_user.outlet_id).where(trans_status: [1,2])
+        @transaksis = Transaksi.where(receiver_id: current_user.outlet_id)
       end          
     end
 

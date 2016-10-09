@@ -6,7 +6,7 @@
     <td>
       <% if current_user.pengadaan? %>
         <%= Outlet.find(transaksi.receiver_id).outlet_name %>
-      <% elsif current_user.gudang? or current_user.admin? %>
+      <% else %>
         <%= Outlet.find(transaksi.sender_id).outlet_name %>
       <% end %>
     </td>

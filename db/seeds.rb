@@ -47,13 +47,6 @@ Dosage.create!([
   {dosage_id: 37, dosage_name: "80.0", dosage_judul: "80 mg"},
   {dosage_id: 38, dosage_name: "800.0", dosage_judul: "800 mg"}
 ])
-Dtran.create!([
-  {dta_qty: 10, dtd_qty: 4, dt_rsn: "", obat_id: 1, transaksi_id: 1, dtt_qty: nil},
-  {dta_qty: 5, dtd_qty: nil, dt_rsn: nil, obat_id: 1, transaksi_id: 2, dtt_qty: nil},
-  {dta_qty: 15, dtd_qty: 10, dt_rsn: "", obat_id: 3, transaksi_id: 1, dtt_qty: nil},
-  {dta_qty: 5, dtd_qty: nil, dt_rsn: "", obat_id: 5, transaksi_id: 1, dtt_qty: nil},
-  {dta_qty: 10, dtd_qty: nil, dt_rsn: nil, obat_id: 7, transaksi_id: 2, dtt_qty: nil}
-])
 Generik.create!([
   {generik_id: 1, generik_name: "Acarbose"},
   {generik_id: 2, generik_name: "Adefovir"},
@@ -991,4 +984,11 @@ Stock.create!([
 Transaksi.create!([
   {transaksi_id: 1, trans_status: 3, sender_id: 16, receiver_id: 12, asked_at: "2016-06-21 10:19:07", dropped_at: "2016-07-25 17:50:36", accepted_at: "2016-08-14 17:33:11"},
   {transaksi_id: 2, trans_status: nil, sender_id: 6, receiver_id: 14, asked_at: "2016-06-30 05:06:11", dropped_at: nil, accepted_at: nil}
+])
+Dtran.create!([
+  {dta_qty: 10, dtd_qty: 4, dt_rsn: "", obat_id: 1, transaksi_id: 1, dtt_qty: nil},
+  {dta_qty: 5, dtd_qty: nil, dt_rsn: nil, obat_id: 1, transaksi_id: 2, dtt_qty: nil},
+  {dta_qty: 15, dtd_qty: 10, dt_rsn: "", obat_id: 3, transaksi_id: 1, dtt_qty: nil},
+  {dta_qty: 5, dtd_qty: nil, dt_rsn: "", obat_id: 5, transaksi_id: 1, dtt_qty: nil},
+  {dta_qty: 10, dtd_qty: nil, dt_rsn: nil, obat_id: 7, transaksi_id: 2, dtt_qty: nil}
 ])

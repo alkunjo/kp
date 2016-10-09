@@ -4,7 +4,7 @@ $("#transModal").modal("show")
 $("#transModal .modal-title").html("Detail Permintaan Obat &nbsp;&nbsp;" +
 	"<% if @transaksi.trans_status == 1 %>" +
 		"<%= escape_javascript(link_to 'Validasi Dropping', valdrop_transaksi_path(@transaksi), class: 'btn btn-sm btn-danger', remote: true) %>"+
-	"<% elsif @transaksi.trans_status == 2 %>" +
-		"<%= escape_javascript(link_to 'Cetak Form Dropping Obat', skrip_drop_transaksi_path(@transaksi), class: 'btn btn-sm btn-success', remote: true) %>"+
+	"<% else %>" +
+		"<%= escape_javascript(link_to 'Cetak Form Dropping Obat', skrip_drop_transaksi_path(@transaksi, format: 'pdf'), class: 'btn btn-sm btn-success', target: '_blank') %>"+
 	" <% end %>")
 $("#transModal .modal-isi").html("<%= escape_javascript(render partial: 'dtrans/drop') %>")
