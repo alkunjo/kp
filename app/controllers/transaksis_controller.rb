@@ -38,28 +38,6 @@ class TransaksisController < ApplicationController
   end
   # ini buat index permintaan, dropping dan penerimaan obat
 
-  # ini dibuat untuk dapetin transaksi dari simple form
-  def get_accept
-  	@tran = Transaksi.find(params[:obat_in])
-		@dtrans = @tran.dtrans
-
-		@dtrans.each do	|dtran|
-			if dtran.dtt_qty.nil?
-				if dtran.dtd_qty.nil?
-          dtran.update_attribute(:dtd_qty, 0) 
-          dtran.update_attribute(:dtt_qty, 0) 
-        else
-          dtran.update_attribute(:dtt_qty, dtran.dtd_qty)
-				end
-			end
-		end
-
-		respond_to do |format|
-			format.js {render 'trans'}
-		end
-  end
-  # ini dibuat untuk dapetin transaksi dari simple form
-
   # ini digunakan untuk nampilin modal detail transaksi per fungsi permintaan, dropping dan penerimaan obat
   def show_ask
     respond_to do |format|
@@ -165,6 +143,28 @@ class TransaksisController < ApplicationController
 		redirect_to stocks_url
   end
 
+  # ini dibuat untuk dapetin transaksi dari simple form
+  def get_accept
+    @tran = Transaksi.find(params[:obat_in])
+    @dtrans = @tran.dtrans
+
+    @dtrans.each do |dtran|
+      if dtran.dtt_qty.nil?
+        if dtran.dtd_qty.nil?
+          dtran.update_attribute(:dtd_qty, 0) 
+          dtran.update_attribute(:dtt_qty, 0) 
+        else
+          dtran.update_attribute(:dtt_qty, dtran.dtd_qty)
+        end
+      end
+    end
+
+    respond_to do |format|
+      format.js {render 'trans'}
+    end
+  end
+  # ini dibuat untuk dapetin transaksi dari simple form
+
   def valdrop
     cek = Dtran.where(dtd_qty: nil).where(transaksi_id: params[:id]).count
     total = Dtran.where(transaksi_id: params[:id]).count
@@ -254,7 +254,7 @@ class TransaksisController < ApplicationController
       elsif current_user.pengadaan?
         @transaksis = Transaksi.where(sender_id: current_user.outlet_id)
       elsif current_user.gudang?
-        @transaksis = Transaksi.where(receiver_id: current_user.outlet_id)
+        @transaksis = Transaksi.where(receiver_id: current_user.outlet_id).where(trans_status: [1,2,3])
       end          
     end
 
