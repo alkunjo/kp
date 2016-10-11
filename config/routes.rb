@@ -1,4 +1,5 @@
 Rails.application.routes.draw do  
+
   resources :transaksis do
     resources :dtrans do
       get :autocomplete_obat_obat_name, on: :collection
@@ -30,6 +31,8 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :activities
+
   resources :obat_ins do
     member do
       get 'valter'

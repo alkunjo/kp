@@ -94,7 +94,8 @@ class TransaksisController < ApplicationController
   # ini digunakan untuk memvalidasi fungsi (update status transaksi aja sebenernya)
   def validate_ask
     if @transaksi.dtrans.exists?
-      @transaksi.update_attribute(:trans_status, 1)
+      @transaksi.update_attributes(:trans_status => 1, :asked_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
+      @transaksi.create_activity action: 'validate_ask', owner: current_user
       respond_to do |format|
         return new
       end
@@ -104,6 +105,7 @@ class TransaksisController < ApplicationController
   def validate_drop
     @transaksi.update_attributes(:trans_status => 2, :dropped_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
     if @transaksi
+      @transaksi.create_activity action: 'validate_drop', owner: current_user
       @dtrans = @transaksi.dtrans
       @dtrans.each do |dtran|
         # update stok
@@ -131,6 +133,7 @@ class TransaksisController < ApplicationController
   	@tran = Transaksi.find(params[:id])
 		@tran.update_attributes(:trans_status => 3, :accepted_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
 		if @tran
+      @tran.create_activity action: 'validate_accept', owner: current_user
 			@dtrans = @tran.dtrans
 			@dtrans.each do |dtran|
 				@stok = Stock.where(outlet_id: @tran.sender_id, obat_id: dtran.obat_id).first

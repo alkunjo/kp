@@ -1,4 +1,7 @@
 class Transaksi < ActiveRecord::Base
+  include PublicActivity::Model
+  tracked only: [:creaete, :validate_ask, :validate_drop, :validate_accept], owner: ->(controller, model) {controller && controller.current_user}
+  
   self.primary_key = "transaksi_id"
   belongs_to :sender, class_name: "Outlet"
   belongs_to :receiver, class_name: "Outlet"
