@@ -83,8 +83,8 @@
       </div>
       <!-- /.panel-heading -->
       <div class="panel-body">
-        <div class="list-group">
-          <% @activities.each do |activity| %>
+        <div class="list-group" style="overflow-y: scroll; height:200px">
+          <% @activities.order('created_at DESC').each do |activity| %>
             <%= render_activity activity %>
           <% end %>
         </div>

@@ -18,6 +18,14 @@ class User < ActiveRecord::Base
     self.role.role_name == "Admin"
   end
 
+  def adminorpengadaan?
+    (self.role.role_name == "Admin") || (self.role.role_name == "Pengadaan")
+  end
+
+  def adminorgudang?
+    (self.role.role_name == "Admin") || (self.role.role_name == "Gudang") 
+  end
+
   def not_admin?
     self.role.role_name != "Admin"
   end

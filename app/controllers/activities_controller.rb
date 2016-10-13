@@ -9,16 +9,6 @@ class ActivitiesController < ApplicationController
       @activities = PublicActivity::Activity.where(trackable.outlet_id => current_user.outlet_id)
     end 
   end
-
-  def _index
-    if current_user.admin?
-      @activities = PublicActivity::Activity.all
-    elsif current_user.pengadaan?
-      @activities = PublicActivity::Activity.where(owner: current_user.user_id)
-    elsif current_user.gudang? || current_user.admin_gudang? || current_user.manager?
-      @activities = PublicActivity::Activity.where(trackable.outlet_id => current_user.outlet_id)
-    end 
-  end
   
   def sender_name(activity)
   	sender = User.find(activity.owner).user_name

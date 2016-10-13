@@ -61,31 +61,58 @@ class TransaksisController < ApplicationController
   # ini digunakan untuk nyetak skrip per fungsi 
   def skrip_bpba
   	@transaksi = Transaksi.find(params[:id])
+    sender = @transaksi.sender_id.to_s
+    if sender.length == 1
+      sender = '0'+sender
+    end
+
+    receiver = @transaksi.receiver_id.to_s
+    if receiver.length == 1
+      receiver = '0'+receiver
+    end
     respond_to do |format|
       format.pdf do 
         pdf = BpbaPdf.new(@transaksi)
         # pdf = Prawn::Document.new
-        send_data pdf.render, filename: "B#{@transaksi.sender_id}#{@transaksi.receiver_id}#{@transaksi.created_at.strftime("%d%m%Y")}.pdf", type: "application/pdf", disposition: "inline"
+        send_data pdf.render, filename: "B#{sender}#{receiver}#{@transaksi.created_at.strftime("%d%m%Y")}.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end
 
   def skrip_drop
     @transaksi = Transaksi.find(params[:id])
+    sender = @transaksi.sender_id.to_s
+    if sender.length == 1
+      sender = '0'+sender
+    end
+
+    receiver = @transaksi.receiver_id.to_s
+    if receiver.length == 1
+      receiver = '0'+receiver
+    end
     respond_to do |format|
       format.pdf do
         pdf = DropPdf.new(@transaksi)
-        send_data pdf.render, filename: "D#{@transaksi.sender_id}#{@transaksi.receiver_id}#{@transaksi.dropped_at.strftime("%d%m%Y")}.pdf", type: "application/pdf", disposition: "inline"
+        send_data pdf.render, filename: "D#{sender}#{receiver}#{@transaksi.dropped_at.strftime("%d%m%Y")}.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end
 
   def skrip_accept
   	@transaksi = Transaksi.find(params[:id])
+    sender = @transaksi.sender_id.to_s
+    if sender.length == 1
+      sender = '0'+sender
+    end
+
+    receiver = @transaksi.receiver_id.to_s
+    if receiver.length == 1
+      receiver = '0'+receiver
+    end
     respond_to do |format|
       format.pdf do
         pdf = AcceptPdf.new(@transaksi)
-        send_data pdf.render, filename: "T#{@transaksi.sender_id}#{@transaksi.receiver_id}#{@transaksi.accepted_at.strftime("%d%m%Y")}.pdf", type: "application/pdf", disposition: "inline"
+        send_data pdf.render, filename: "T#{sender}#{receiver}#{@transaksi.accepted_at.strftime("%d%m%Y")}.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end
@@ -94,8 +121,9 @@ class TransaksisController < ApplicationController
   # ini digunakan untuk memvalidasi fungsi (update status transaksi aja sebenernya)
   def validate_ask
     if @transaksi.dtrans.exists?
+      penerima = Outlet.find(@transaksi.receiver_id)      
       @transaksi.update_attributes(:trans_status => 1, :asked_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
-      @transaksi.create_activity action: 'validate_ask', owner: current_user
+      @transaksi.create_activity action: 'validate_ask', owner: current_user, recipient: penerima
       respond_to do |format|
         return new
       end
@@ -105,7 +133,8 @@ class TransaksisController < ApplicationController
   def validate_drop
     @transaksi.update_attributes(:trans_status => 2, :dropped_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
     if @transaksi
-      @transaksi.create_activity action: 'validate_drop', owner: current_user
+      penerima = Outlet.find(@transaksi.sender_id)
+      @transaksi.create_activity action: 'validate_drop', owner: current_user, recipient: penerima
       @dtrans = @transaksi.dtrans
       @dtrans.each do |dtran|
         # update stok
@@ -133,7 +162,8 @@ class TransaksisController < ApplicationController
   	@tran = Transaksi.find(params[:id])
 		@tran.update_attributes(:trans_status => 3, :accepted_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
 		if @tran
-      @tran.create_activity action: 'validate_accept', owner: current_user
+      penerima = Outlet.find(@tran.receiver_id)
+      @tran.create_activity action: 'validate_accept', owner: current_user, recipient: penerima
 			@dtrans = @tran.dtrans
 			@dtrans.each do |dtran|
 				@stok = Stock.where(outlet_id: @tran.sender_id, obat_id: dtran.obat_id).first
@@ -148,7 +178,18 @@ class TransaksisController < ApplicationController
 
   # ini dibuat untuk dapetin transaksi dari simple form
   def get_accept
-    @tran = Transaksi.find(params[:obat_in])
+    
+    # substring nomor BPBA
+    @sid = params[:obat_in][1..2]
+    @rid = params[:obat_in][3..4]
+    @tgl_day = params[:obat_in][5..6]
+    @tgl_bln = params[:obat_in][7..8]
+    @tgl_yrs = params[:obat_in][9..12]
+
+    # respond_to do |format|
+    #   format.js {render 'alert'}
+    # end
+    @tran = Transaksi.where(sender_id: @sid, receiver_id: @rid).first
     @dtrans = @tran.dtrans
 
     @dtrans.each do |dtran|
@@ -172,7 +213,11 @@ class TransaksisController < ApplicationController
     cek = Dtran.where(dtd_qty: nil).where(transaksi_id: params[:id]).count
     total = Dtran.where(transaksi_id: params[:id]).count
     @transaksi = Transaksi.find(params[:id])
-    flash.now[:danger] = "#{cek} permintaan belum terisi dari #{total} permintaan. "
+    if cek == 0
+      flash.now[:danger] = "#{total} permintaan telah terisi. "
+    else
+      flash.now[:danger] = "#{cek} permintaan belum terisi dari #{total} permintaan. "
+    end
     
     respond_to do |format|
       format.js {render 'valdrop'}

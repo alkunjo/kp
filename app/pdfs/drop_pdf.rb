@@ -10,14 +10,23 @@ class	DropPdf < Prawn::Document
 
 	def header_page
 		sender = Outlet.find(@transaksi.sender_id)
-		receiver = Outlet.find(@transaksi.receiver_id)		
+		receiver = Outlet.find(@transaksi.receiver_id)	
+		sid = @transaksi.sender_id.to_s
+    if sid.length == 1
+      sid = '0'+sid
+    end
+
+    rid = @transaksi.receiver_id.to_s
+    if rid.length == 1
+      rid = '0'+rid
+    end	
 		font_size(13) {text "FORM DROPPING BARANG APOTEK", align: :center, style: :bold}
 		move_down 20
 		font_size(12) {text "Dropping Ke: Apotek #{sender.outlet_name}", align: :center}
 		move_down 3
 		font_size(12) {text "Tahun Dropping: #{@transaksi.dropped_at.strftime("%Y")}    Tahun BPBA: #{@transaksi.asked_at.strftime("%Y")} ", align: :center}
 		move_down 3
-		font_size(12) {text "Nomor Dropping: D#{@transaksi.receiver_id}#{@transaksi.sender_id}#{@transaksi.dropped_at.strftime("%d%m%Y")} Nomor BPBA: B#{@transaksi.sender_id}#{@transaksi.receiver_id}#{@transaksi.created_at.strftime("%d%m%Y")}", align: :center}
+		font_size(12) {text "Nomor Dropping: D#{rid}#{sid}#{@transaksi.dropped_at.strftime("%d%m%Y")} Nomor BPBA: B#{sid}#{rid}#{@transaksi.created_at.strftime("%d%m%Y")}", align: :center}
 		move_down 3
 		font_size(12) {text "Tanggal   : #{@transaksi.dropped_at.strftime("%d/%m/%Y")}", align: :center}
 		move_down 10

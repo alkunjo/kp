@@ -10,12 +10,21 @@ class	AcceptPdf < Prawn::Document
 
 	def header_page
 		sender = Outlet.find(@transaksi.sender_id)
-		receiver = Outlet.find(@transaksi.receiver_id)		
+		receiver = Outlet.find(@transaksi.receiver_id)
+		sid = @transaksi.sender_id.to_s
+    if sid.length == 1
+      sid = '0'+sid
+    end
+
+    rid = @transaksi.receiver_id.to_s
+    if rid.length == 1
+      rid = '0'+rid
+    end		
 		font_size(13) {text "BUKTI PENERIMAAN BARANG", align: :center, style: :bold}
 		move_down 20
 		font_size(12) {text "Terima dari: Apotek #{receiver.outlet_name}", align: :center}
 		move_down 3
-		font_size(12) {text "Nomor BPBA: B#{@transaksi.sender_id}#{@transaksi.receiver_id}#{@transaksi.created_at.strftime("%d%m%Y")}   Nomor Penerimaan: T#{@transaksi.sender_id}#{@transaksi.receiver_id}#{@transaksi.accepted_at.strftime("%d%m%Y")}", align: :center}
+		font_size(12) {text "Nomor BPBA: B#{sid}#{sid}#{@transaksi.created_at.strftime("%d%m%Y")}   Nomor Penerimaan: T#{sid}#{sid}#{@transaksi.accepted_at.strftime("%d%m%Y")}", align: :center}
 		move_down 3
 		font_size(12) {text "Tanggal   : #{@transaksi.accepted_at.strftime("%d/%m/%Y")}", align: :center}
 		move_down 10
