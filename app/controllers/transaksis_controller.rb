@@ -22,6 +22,7 @@ class TransaksisController < ApplicationController
     # @transaksi = Transaksi.new
   end
 
+
   # ini buat index permintaan, dropping dan penerimaan obat
   def ask
     @transaksi = Transaksi.new
@@ -37,6 +38,7 @@ class TransaksisController < ApplicationController
   	end
   end
   # ini buat index permintaan, dropping dan penerimaan obat
+
 
   # ini digunakan untuk nampilin modal detail transaksi per fungsi permintaan, dropping dan penerimaan obat
   def show_ask
@@ -57,6 +59,40 @@ class TransaksisController < ApplicationController
     end
   end
   # ini digunakan untuk nampilin modal detail transaksi per fungsi permintaan, dropping dan penerimaan obat
+
+
+  # ini digunakan untuk build report view
+  def report_ask
+    
+  end
+
+  def report_drop
+      
+  end
+  # ini digunakan untuk build report view
+
+
+  # ini buat generate pdf report
+  def print_report_ask
+    
+  end
+
+  def print_report_drop
+    
+  end
+  # ini buat generate pdf report
+
+
+  # ini buat generate simple form buat report
+  def report_ask_view
+    
+  end
+
+  def report_drop_view
+    
+  end
+  # ini buat generate simple form buat report
+
 
   # ini digunakan untuk nyetak skrip per fungsi 
   def skrip_bpba
@@ -118,6 +154,7 @@ class TransaksisController < ApplicationController
   end
   # ini digunakan untuk nyetak skrip per fungsi 
 
+
   # ini digunakan untuk memvalidasi fungsi (update status transaksi aja sebenernya)
   def validate_ask
     if @transaksi.dtrans.exists?
@@ -159,22 +196,24 @@ class TransaksisController < ApplicationController
   end
 
   def validate_accept
-  	@tran = Transaksi.find(params[:id])
-		@tran.update_attributes(:trans_status => 3, :accepted_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
-		if @tran
+    @tran = Transaksi.find(params[:id])
+    @tran.update_attributes(:trans_status => 3, :accepted_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
+    if @tran
       penerima = Outlet.find(@tran.receiver_id)
       @tran.create_activity action: 'validate_accept', owner: current_user, recipient: penerima
-			@dtrans = @tran.dtrans
-			@dtrans.each do |dtran|
-				@stok = Stock.where(outlet_id: @tran.sender_id, obat_id: dtran.obat_id).first
-				trima = dtran.dtt_qty.present? ? dtran.dtt_qty : 0				
-				stok = @stok.stok_qty + trima
-				@stok.update_attributes(:stok_qty => stok, :updated_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
-			end
-		end
-		flash[:success] = "Stok berhasil ditambahkan"
-		redirect_to stocks_url
+      @dtrans = @tran.dtrans
+      @dtrans.each do |dtran|
+        @stok = Stock.where(outlet_id: @tran.sender_id, obat_id: dtran.obat_id).first
+        trima = dtran.dtt_qty.present? ? dtran.dtt_qty : 0        
+        stok = @stok.stok_qty + trima
+        @stok.update_attributes(:stok_qty => stok, :updated_at => Time.now.strftime("%Y-%m-%d %H:%M:%S"))
+      end
+    end
+    flash[:success] = "Stok berhasil ditambahkan"
+    redirect_to stocks_url
   end
+  # ini digunakan untuk memvalidasi fungsi (update status transaksi aja sebenernya)
+
 
   # ini dibuat untuk dapetin transaksi dari simple form
   def get_accept
@@ -209,6 +248,8 @@ class TransaksisController < ApplicationController
   end
   # ini dibuat untuk dapetin transaksi dari simple form
 
+
+  # ini digunakan untuk konfirmasi validasi dropping aja
   def valdrop
     cek = Dtran.where(dtd_qty: nil).where(transaksi_id: params[:id]).count
     total = Dtran.where(transaksi_id: params[:id]).count
@@ -223,7 +264,8 @@ class TransaksisController < ApplicationController
       format.js {render 'valdrop'}
     end
   end
-  # ini digunakan untuk memvalidasi fungsi (update status transaksi aja sebenernya)
+  # ini digunakan untuk konfirmasi validasi dropping aja
+
 
   def new
     set_transaksis

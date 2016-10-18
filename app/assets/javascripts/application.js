@@ -13,7 +13,11 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
-//= require dataTables/jquery.dataTables
+//= require jquery.dataTables
+//= require dataTables.bootstrap
+//= require dataTables.responsive
+//= require dataTables.colReorder
+//= require dataTables.fixedHeader
 //= require autocomplete-rails
 //= require bootstrap
 //= require bootstrap-table

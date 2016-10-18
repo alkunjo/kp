@@ -28,6 +28,8 @@ Rails.application.routes.draw do
       get :accept
       get :report_ask
       get :report_drop
+      get :print_report_ask
+      get :print_report_drop
     end
   end
   
