@@ -21,12 +21,15 @@ Rails.application.routes.draw do
       get 'del'
     end
     collection do
-      post 'get_accept'
+      post :get_accept
       get :autocomplete_outlet_outlet_name
       get :ask
       get :drop
       get :accept
+      get :reports
       get :report_ask
+      post :report_ask_control
+      post :report_drop_control
       get :report_drop
       get :print_report_ask
       get :print_report_drop

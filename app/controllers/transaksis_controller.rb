@@ -1,4 +1,5 @@
 class TransaksisController < ApplicationController
+  include TransaksisHelper
   before_filter :authenticate_user!
   before_action :set_transaksi, only: [:edit, :update, :destroy, :del, :show_ask, :show_drop, :show_accept, :skrip_bpba, :skrip_drop, :validate_ask, :validate_drop]
   before_action :set_transaksi_ask, only: [:index, :show_a]
@@ -19,9 +20,7 @@ class TransaksisController < ApplicationController
   	end
 
   	redirect_to path
-    # @transaksi = Transaksi.new
   end
-
 
   # ini buat index permintaan, dropping dan penerimaan obat
   def ask
@@ -63,18 +62,65 @@ class TransaksisController < ApplicationController
 
   # ini digunakan untuk build report view
   def report_ask
+    if current_user.admin?
+      @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(created_at), YEAR(created_at)) as bulan")
+    elsif current_user.pengadaan?
+      @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(created_at), YEAR(created_at)) as bulan").where("sender_id = '#{current_user.outlet_id}' ")
+    
+    end
+    respond_to do |format|
+      format.html {render "report_ask"}
+    end
+  end
+
+  def report_ask_control
+    
+    # get value from input parameter
+    apotek = params[:outlet_name].nil? ? Outlet.find(current_user.outlet_id).outlet_name : params[:outlet_name][0] 
+    outlet = Outlet.where(outlet_name: apotek).first
+    panjang = params[:bulan].length - 6
+    month = params[:bulan][0..panjang]
+    year = params[:bulan].split(//).last(5).join
+    # render :js => "alert('#{apotek}');"
+
+    @cek = Transaksi.where("sender_id = '#{outlet.outlet_id}'").where("MONTHNAME(created_at) = '#{month}'").where("YEAR(created_at) = '#{year}'")
+    
+    # cek transaksi
+    if @cek
+      # render :js => "alert('#{@cek.count}');"
+      # @dtrans = cek.dtrans
+      transaksi_asks = @cek
+      respond_to do |format|
+        format.js {render "report_ask"}
+      end
+    else
+      render :js => "alert('Transaksi tidak ditemukan');"
+    end
+  end
+
+  def report_drop_control
     
   end
 
   def report_drop
-      
+    if current_user.admin?
+      @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(created_at), YEAR(created_at)) as bulan")
+    elsif current_user.gudang?
+      @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(created_at), YEAR(created_at)) as bulan").where("receiver_id == '#{current_user.outlet_id}' ")
+    end
   end
   # ini digunakan untuk build report view
 
 
   # ini buat generate pdf report
   def print_report_ask
-    
+    respond_to do |format|
+      format.pdf do 
+        pdf = LapaskPdf.new(transaksi_asks)
+        # pdf = Prawn::Document.new
+        send_data pdf.render, filename: "Laporan Permintaan Obat #{outlet.outlet_name} #{params[:bulan]}.pdf", type: "application/pdf", disposition: "inline"
+      end
+    end
   end
 
   def print_report_drop
@@ -336,6 +382,14 @@ class TransaksisController < ApplicationController
 
     def set_outlet
       @outlet = Outlet.where(outlet_id: current_user.outlet_id).first
+    end
+
+    def set_transaksi_asks(cek)
+      @transaksi_asks = cek
+    end
+
+    def get_transaksi_asks
+      return @transaksi_asks
     end
 
     def set_transaksis

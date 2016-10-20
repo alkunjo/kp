@@ -1,0 +1,19 @@
+<%= form_tag "/transaksis/report_drop", remote: true do %>
+  <div class="form-group">
+    <div class="row" style="margin-left: 15px">
+      <% if current_user.admin? %>
+      <div class="col-md-4">
+        <%= label_tag "Apotek" %>
+        <%= autocomplete_field :outlet_name, "", autocomplete_outlet_outlet_name_transaksis_path, {class: "form-control"} %>
+      </div>
+      <% end %>
+      <div class="col-md-4">
+        <%= label_tag "Bulan" %>
+        <%= select_tag "Bulan", options_from_collection_for_select(@bulan, "transaksi_id", "bulan"), {class: "form-control"} %>
+      </div>
+      <div class="col-md-2">
+        <%= submit_tag "Submit", class: "btn btn-sm btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end -%>
