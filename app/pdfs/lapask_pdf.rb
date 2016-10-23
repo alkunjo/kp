@@ -1,22 +1,34 @@
 class	LapaskPdf < Prawn::Document
 	include ActiveSupport::NumberHelper
-	def initialize(cek)
+	def initialize(jadisatu)
+		# @cek = cek
+		# @sender = sender
+		# @month = month
+		# @year = year
+		@jadisatu = jadisatu
 		super(top_margin: 30)
-		@cek = cek
+		font_size(10) {text "#{@jadisatu}"}
+		move_down 3
 		header_page
 		print_table
 		footer_page
 	end
 
 	def header_page
-		sender = @cek.sender_id
-		outlet = Outlet.find()
 		font_size(10) {text "PT. Kimia Farma Apotek"}
+		move_down 3
+		font_size(10) {text "#{@jadisatu}"}
+		move_down 3
+		font_size(10) {text "#{@jadisatu}"}
+		move_down 3
+		font_size(10) {text "#{@jadisatu}"}
 		move_down 3
 	end
 
 	def print_table
 		font_size(10) {text "Table"}
+		move_down 3
+		font_size(10) {text "asdasd"}
 		move_down 3
 	end
 

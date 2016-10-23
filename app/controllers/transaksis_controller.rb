@@ -77,21 +77,20 @@ class TransaksisController < ApplicationController
     
     # get value from input parameter
     apotek = params[:outlet_name].nil? ? Outlet.find(current_user.outlet_id).outlet_name : params[:outlet_name][0] 
-    outlet = Outlet.where(outlet_name: apotek).first
+    @sender = Outlet.where(outlet_name: apotek).first
     panjang = params[:bulan].length - 6
-    month = params[:bulan][0..panjang]
-    year = params[:bulan].split(//).last(5).join
+    @month = params[:bulan][0..panjang]
+    @year = params[:bulan].split(//).last(4).join
     # render :js => "alert('#{apotek}');"
 
-    @cek = Transaksi.where("sender_id = '#{outlet.outlet_id}'").where("MONTHNAME(created_at) = '#{month}'").where("YEAR(created_at) = '#{year}'")
+    @cek = Transaksi.where("sender_id = '#{@sender.outlet_id}'").where("MONTHNAME(created_at) = '#{@month}'").where("YEAR(created_at) = '#{@year}'")
     
     # cek transaksi
     if @cek
       # render :js => "alert('#{@cek.count}');"
       # @dtrans = cek.dtrans
-      transaksi_asks = @cek
       respond_to do |format|
-        format.js {render "report_ask"}
+        format.js {render "report_ask", locals: {sender: @sender, month: @month, year: @year}}
       end
     else
       render :js => "alert('Transaksi tidak ditemukan');"
@@ -114,11 +113,17 @@ class TransaksisController < ApplicationController
 
   # ini buat generate pdf report
   def print_report_ask
+    # @cek = params[:cek]
+    @sender = params[:sender]
+    @month = params[:month]
+    @year = params[:year]
+    jadisatu = "#{@sender} #{@month} #{@year}"
+    # render :js => "alert('#{@sender} #{@month} #{@year}');"
     respond_to do |format|
       format.pdf do 
-        pdf = LapaskPdf.new(transaksi_asks)
+        pdf = LapaskPdf.new(jadisatu)
         # pdf = Prawn::Document.new
-        send_data pdf.render, filename: "Laporan Permintaan Obat #{outlet.outlet_name} #{params[:bulan]}.pdf", type: "application/pdf", disposition: "inline"
+        send_data pdf.render, filename: "Laporan Permintaan Obat #{@sender} #{@month} #{@year}.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end

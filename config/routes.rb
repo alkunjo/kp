@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       get :reports
       get :report_ask
       post :report_ask_control
+      get :report_ask_control
       post :report_drop_control
       get :report_drop
       get :print_report_ask

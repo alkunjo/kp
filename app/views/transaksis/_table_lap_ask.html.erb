@@ -3,7 +3,7 @@
 		<th>Apotek Yang Dituju</th>
 		<th>
 			Jumlah Dropping
-			<%= link_to 'Cetak Laporan', print_report_ask_transaksis_path(@cek, format: 'pdf'), class: "btn btn-sm btn-success", target: '_blank' %>
+			<%= link_to 'Cetak Laporan', print_report_ask_transaksis_path({sender: @sender, month: @month, year: @year}, format: 'pdf'), class: "btn btn-sm btn-success", target: '_blank' %><br/>
 		</th>
 	</thead>
 	<tbody>
