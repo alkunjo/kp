@@ -1,4 +1,4 @@
-class	LapaskPdf < Prawn::Document
+class	LaptrimPdf < Prawn::Document
 	include ActiveSupport::NumberHelper
 	include TransaksisHelper
 	def initialize(cek, sender, month, year)
@@ -22,7 +22,7 @@ class	LapaskPdf < Prawn::Document
 		move_down 3
 		font_size(10) {text "#{@sender.outlet_city}", style: :bold}
 		move_down 3
-		font_size(12) {text "Laporan Permintaan Obat", style: :bold, align: :center}
+		font_size(12) {text "Laporan Penerimaan Obat", style: :bold, align: :center}
 		move_down 3
 		font_size(12) {text "Bulan #{bulan(@month)} Tahun #{@year}", style: :bold, align: :center}
 		move_down 3
@@ -44,7 +44,7 @@ class	LapaskPdf < Prawn::Document
 	def table_ask
 		numb = 0
 		grand_total = 0
-		[["No.","Nomor BPBA", "Apotek yang Dituju", "Jumlah Minta", "Keterangan"]]+
+		[["No.","Nomor BPBA", "Apotek Pemberi", "Jumlah Terima", "Keterangan"]]+
 		@cek.map do |transaksi|
 			numb = numb + 1
 

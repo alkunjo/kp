@@ -66,10 +66,31 @@ class TransaksisController < ApplicationController
       @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(created_at), YEAR(created_at)) as bulan")
     elsif current_user.pengadaan?
       @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(created_at), YEAR(created_at)) as bulan").where("sender_id = '#{current_user.outlet_id}' ")
-    
     end
     respond_to do |format|
       format.html {render "report_ask"}
+    end
+  end
+
+  def report_drop
+    if current_user.admin?
+      @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(dropped_at), YEAR(dropped_at)) as bulan")
+    elsif current_user.gudang?
+      @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(dropped_at), YEAR(dropped_at)) as bulan").where("receiver_id = '#{current_user.outlet_id}' ")
+    end
+    respond_to do |format|
+      format.html {render "report_drop"}
+    end
+  end
+
+  def report_accept
+    if current_user.admin?
+      @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(accepted_at), YEAR(accepted_at)) as bulan")
+    elsif current_user.gudang?
+      @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(accepted_at), YEAR(accepted_at)) as bulan").where("sender_id = '#{current_user.outlet_id}' ")
+    end
+    respond_to do |format|
+      format.html {render "report_accept"}
     end
   end
 
@@ -83,14 +104,22 @@ class TransaksisController < ApplicationController
     @year = params[:bulan].split(//).last(4).join
     # render :js => "alert('#{apotek}');"
 
-    @cek = Transaksi.where("sender_id = '#{@sender.outlet_id}'").where("MONTHNAME(created_at) = '#{@month}'").where("YEAR(created_at) = '#{@year}'")
+    @cek = Transaksi
+    .where("sender_id = '#{@sender.outlet_id}'")
+    .where("MONTHNAME(created_at) = '#{@month}'")
+    .where("YEAR(created_at) = '#{@year}'")
+    .where(trans_status: [1,2,3])
     
     # cek transaksi
-    if @cek
+    if @cek.exists?
       # render :js => "alert('#{@cek.count}');"
-      # @dtrans = cek.dtrans
       respond_to do |format|
         format.js {render "report_ask", locals: {sender: @sender, month: @month, year: @year}}
+        format.pdf do 
+          pdf = LapaskPdf.new(@cek, @sender, @month, @year)
+          # pdf = Prawn::Document.new
+          send_data pdf.render, filename: "Laporan Permintaan Obat #{@sender} #{@month} #{@year}.pdf", type: "application/pdf", disposition: "inline"
+        end
       end
     else
       render :js => "alert('Transaksi tidak ditemukan');"
@@ -98,52 +127,67 @@ class TransaksisController < ApplicationController
   end
 
   def report_drop_control
+    # get value from input parameter
+    apotek = params[:outlet_name].nil? ? Outlet.find(current_user.outlet_id).outlet_name : params[:outlet_name][0] 
+    @receiver = Outlet.where(outlet_name: apotek).first
+    panjang = params[:bulan].length - 6
+    @month = params[:bulan][0..panjang]
+    @year = params[:bulan].split(//).last(4).join
+    # render :js => "alert('#{apotek}');"
+
+    @cek = Transaksi
+    .where("receiver_id = '#{@receiver.outlet_id}'")
+    .where("MONTHNAME(dropped_at) = '#{@month}'")
+    .where("YEAR(dropped_at) = '#{@year}'")
+    .where(trans_status: [2,3])
     
+    # cek transaksi
+    if @cek.exists?
+      # render :js => "alert('#{@cek.count}');"
+      respond_to do |format|
+        format.js {render "report_drop", locals: {receiver: @receiver, month: @month, year: @year}}
+        format.pdf do 
+          pdf = LapdropPdf.new(@cek, @receiver, @month, @year)
+          # pdf = Prawn::Document.new
+          send_data pdf.render, filename: "Laporan Dropping Obat #{@receiver} #{@month} #{@year}.pdf", type: "application/pdf", disposition: "inline"
+        end
+      end
+    else
+      render :js => "alert('Transaksi tidak ditemukan');"
+    end
   end
 
-  def report_drop
-    if current_user.admin?
-      @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(created_at), YEAR(created_at)) as bulan")
-    elsif current_user.gudang?
-      @bulan = Transaksi.select("distinct CONCAT_WS(' ', MONTHNAME(created_at), YEAR(created_at)) as bulan").where("receiver_id == '#{current_user.outlet_id}' ")
+  def report_accept_control
+    # get value from input parameter
+    apotek = params[:outlet_name].nil? ? Outlet.find(current_user.outlet_id).outlet_name : params[:outlet_name][0] 
+    @sender = Outlet.where(outlet_name: apotek).first
+    panjang = params[:bulan].length - 6
+    @month = params[:bulan][0..panjang]
+    @year = params[:bulan].split(//).last(4).join
+    # render :js => "alert('#{apotek}');"
+
+    @cek = Transaksi
+    .where("sender_id = '#{@sender.outlet_id}'")
+    .where("MONTHNAME(accepted_at) = '#{@month}'")
+    .where("YEAR(accepted_at) = '#{@year}'")
+    .where(trans_status: [2,3])
+    
+    # cek transaksi
+    if @cek.exists?
+      # render :js => "alert('#{@cek.count}');"
+      respond_to do |format|
+        format.js {render "report_accept", locals: {sender: @sender, month: @month, year: @year}}
+        format.pdf do 
+          pdf = LaptrimPdf.new(@cek, @sender, @month, @year)
+          # pdf = Prawn::Document.new
+          send_data pdf.render, filename: "Laporan Dropping Obat #{@sender} #{@month} #{@year}.pdf", type: "application/pdf", disposition: "inline"
+        end
+      end
+    else
+      render :js => "alert('Transaksi tidak ditemukan');"
     end
   end
   # ini digunakan untuk build report view
-
-
-  # ini buat generate pdf report
-  def print_report_ask
-    # @cek = params[:cek]
-    @sender = params[:sender]
-    @month = params[:month]
-    @year = params[:year]
-    jadisatu = "#{@sender} #{@month} #{@year}"
-    # render :js => "alert('#{@sender} #{@month} #{@year}');"
-    respond_to do |format|
-      format.pdf do 
-        pdf = LapaskPdf.new(jadisatu)
-        # pdf = Prawn::Document.new
-        send_data pdf.render, filename: "Laporan Permintaan Obat #{@sender} #{@month} #{@year}.pdf", type: "application/pdf", disposition: "inline"
-      end
-    end
-  end
-
-  def print_report_drop
-    
-  end
-  # ini buat generate pdf report
-
-
-  # ini buat generate simple form buat report
-  def report_ask_view
-    
-  end
-
-  def report_drop_view
-    
-  end
-  # ini buat generate simple form buat report
-
 
   # ini digunakan untuk nyetak skrip per fungsi 
   def skrip_bpba

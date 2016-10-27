@@ -1,10 +1,10 @@
-class	LapaskPdf < Prawn::Document
+class	LapdropPdf < Prawn::Document
 	include ActiveSupport::NumberHelper
 	include TransaksisHelper
-	def initialize(cek, sender, month, year)
+	def initialize(cek, receiver, month, year)
 		super(top_margin: 30)
 		@cek = cek
-		@sender = sender
+		@receiver = receiver
 		@month = month
 		@year = year
 
@@ -16,13 +16,13 @@ class	LapaskPdf < Prawn::Document
 	def header_page
 		font_size(10) {text "PT. Kimia Farma Apotek", style: :bold}
 		move_down 3
-		font_size(10) {text "Apotek #{@sender.outlet_name}", style: :bold}
+		font_size(10) {text "Apotek #{@receiver.outlet_name}", style: :bold}
 		move_down 3
-		font_size(10) {text "#{@sender.outlet_address}", style: :bold}
+		font_size(10) {text "#{@receiver.outlet_address}", style: :bold}
 		move_down 3
-		font_size(10) {text "#{@sender.outlet_city}", style: :bold}
+		font_size(10) {text "#{@receiver.outlet_city}", style: :bold}
 		move_down 3
-		font_size(12) {text "Laporan Permintaan Obat", style: :bold, align: :center}
+		font_size(12) {text "Laporan Dropping Obat", style: :bold, align: :center}
 		move_down 3
 		font_size(12) {text "Bulan #{bulan(@month)} Tahun #{@year}", style: :bold, align: :center}
 		move_down 3
@@ -44,7 +44,7 @@ class	LapaskPdf < Prawn::Document
 	def table_ask
 		numb = 0
 		grand_total = 0
-		[["No.","Nomor BPBA", "Apotek yang Dituju", "Jumlah Minta", "Keterangan"]]+
+		[["No.","Nomor Dropping", "Apotek yang Dituju", "Jumlah Dropping", "Keterangan"]]+
 		@cek.map do |transaksi|
 			numb = numb + 1
 
@@ -60,14 +60,14 @@ class	LapaskPdf < Prawn::Document
 
 	    total = 0
 	    transaksi.dtrans.map do |dtran|
-	    	total = total + (dtran.dta_qty*Obat.find(dtran.obat_id).obat_hpp)
+	    	total = total + (dtran.dtd_qty*Obat.find(dtran.obat_id).obat_hpp)
 	    end
 
 	    grand_total = grand_total + total
 
 			[numb, 
-			 "B#{sid}#{rid}#{transaksi.created_at.strftime("%d%m%Y")}", 
-			 Outlet.find(transaksi.receiver_id).outlet_name,
+			 "D#{rid}#{sid}#{transaksi.dropped_at.strftime("%d%m%Y")}", 
+			 Outlet.find(transaksi.sender_id).outlet_name,
 			 to_rupiah(total),
 			 ""]
 		end+

@@ -28,12 +28,14 @@ Rails.application.routes.draw do
       get :accept
       get :reports
       get :report_ask
+      get :report_drop
+      get :report_accept
       post :report_ask_control
       get :report_ask_control
       post :report_drop_control
-      get :report_drop
-      get :print_report_ask
-      get :print_report_drop
+      get :report_drop_control
+      post :report_accept_control
+      get :report_accept_control
     end
   end
   
