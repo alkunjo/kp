@@ -1,6 +1,7 @@
 class TransaksisController < ApplicationController
   include TransaksisHelper
   before_filter :authenticate_user!
+  before_filter :set_activities
   before_action :set_transaksi, only: [:edit, :update, :destroy, :del, :show_ask, :show_drop, :show_accept, :skrip_bpba, :skrip_drop, :validate_ask, :validate_drop]
   before_action :set_transaksi_ask, only: [:index, :show_a]
   before_action :set_transaksi_drop, only: [:index, :show_d]
@@ -149,7 +150,7 @@ class TransaksisController < ApplicationController
         format.pdf do 
           pdf = LapdropPdf.new(@cek, @receiver, @month, @year)
           # pdf = Prawn::Document.new
-          send_data pdf.render, filename: "Laporan Dropping Obat #{@receiver} #{@month} #{@year}.pdf", type: "application/pdf", disposition: "inline"
+          send_data pdf.render, filename: "Laporan Dropping Obat #{@receiver.outlet_name} #{@month} #{@year}.pdf", type: "application/pdf", disposition: "inline"
         end
       end
     else
@@ -180,7 +181,7 @@ class TransaksisController < ApplicationController
         format.pdf do 
           pdf = LaptrimPdf.new(@cek, @sender, @month, @year)
           # pdf = Prawn::Document.new
-          send_data pdf.render, filename: "Laporan Dropping Obat #{@sender} #{@month} #{@year}.pdf", type: "application/pdf", disposition: "inline"
+          send_data pdf.render, filename: "Laporan Dropping Obat #{@sender.outlet_name} #{@month} #{@year}.pdf", type: "application/pdf", disposition: "inline"
         end
       end
     else
@@ -387,6 +388,7 @@ class TransaksisController < ApplicationController
         
       elsif current_user.pengadaan?
         @transaksi = Transaksi.create(sender_id: current_user.outlet_id, receiver_id: receiver.outlet_id)
+        @transaksi.create_activity action: 'create', owner: current_user, recipient: receiver
         respond_to do |format|
           if @transaksi
             return new
@@ -454,4 +456,15 @@ class TransaksisController < ApplicationController
     def transaksi_params
       params.require(:transaksi).permit(:trans_status, :sender_id, :receiver_id, :sender_name, :receiver_name, :outlet_name)
     end
+
+    def set_activities
+      if current_user.admin?
+        @activities = PublicActivity::Activity.all
+      elsif current_user.pengadaan?
+        @activities = PublicActivity::Activity.where(owner: current_user.user_id)
+      elsif current_user.gudang? || current_user.admin_gudang? || current_user.manager?
+        @activities = PublicActivity::Activity.where(recipient_id: current_user.outlet_id)
+      end
+    end
+    
 end

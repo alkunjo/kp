@@ -8,3 +8,11 @@
 
 1 April 2016:
 nomor BPBA diberikan kode APP
+
+
+tambahan modul penjualan, pembelian, dropping,
+tambahkan field QtJual, QtBeli(beli dari distributor), QtDropping, QtAwal(stock opname), 
+SaldoAkhir ((awal+beli)-(jual+-dropping))
+
+Safetystock didapat dari pareto penjualan selama 1 bulan + stock aman (+-2 minggu)
+warning 2 minggu

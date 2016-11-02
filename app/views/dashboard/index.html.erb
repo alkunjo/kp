@@ -83,7 +83,7 @@
       </div>
       <!-- /.panel-heading -->
       <div class="panel-body">
-        <div class="list-group" style="overflow-y: scroll; height:200px">
+        <div class="list-group" style="overflow-y: scroll; max-height:200px">
           <% @activities.order('created_at DESC').each do |activity| %>
             <%= render_activity activity %>
           <% end %>

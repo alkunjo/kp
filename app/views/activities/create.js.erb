@@ -1,0 +1,7 @@
+Poller.create();
+Poller.poll(0);
+<% if @activity.new_record? %>
+alert('Activity cannot be saved');
+<% else %>
+$('notifLists').val('');
+<% end %>

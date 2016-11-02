@@ -25,5 +25,6 @@
 //= require sb-admin-2
 //= require raphael-min
 //= require morris.min
+//= require polling
 //= require turbolinks
 //= require_tree .

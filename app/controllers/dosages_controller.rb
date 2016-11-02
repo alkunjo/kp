@@ -1,5 +1,6 @@
 class DosagesController < ApplicationController
 	before_filter :authenticate_user!
+  before_filter :set_activities
   before_action :set_dosage, only: [:edit, :update, :del, :destroy]
   before_action :set_dosages, only: [:create, :update, :destroy, :new, :index]
   
@@ -67,5 +68,15 @@ class DosagesController < ApplicationController
 
     def dosage_params
       params.require(:dosage).permit(:dosage_name, :dosage_judul)
+    end
+
+    def set_activities
+      if current_user.admin?
+        @activities = PublicActivity::Activity.all
+      elsif current_user.pengadaan?
+        @activities = PublicActivity::Activity.where(owner: current_user.user_id)
+      elsif current_user.gudang? || current_user.admin_gudang? || current_user.manager?
+        @activities = PublicActivity::Activity.where(recipient_id: current_user.outlet_id)
+      end
     end
 end
