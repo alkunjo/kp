@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:80
--- Generation Time: Oct 29, 2016 at 03:34 PM
--- Server version: 5.7.15-0ubuntu0.16.04.1
--- PHP Version: 7.0.8-0ubuntu0.16.04.3
+-- Generation Time: Nov 02, 2016 at 11:41 AM
+-- Server version: 5.7.16-0ubuntu0.16.04.1
+-- PHP Version: 5.6.27-1+deb.sury.org~xenial+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -53,7 +53,10 @@ INSERT INTO `activities` (`id`, `trackable_id`, `trackable_type`, `owner_id`, `o
 (12, 3, 'Transaksi', 7, 'User', 'transaksi.validate_accept', NULL, 1, 'Outlet', '2016-10-11 12:00:26', '2016-10-11 12:00:26'),
 (13, 3, 'Transaksi', 7, 'User', 'transaksi.validate_accept', NULL, 1, 'Outlet', '2016-10-11 12:03:48', '2016-10-11 12:03:48'),
 (14, 2, 'Transaksi', 1, 'User', 'transaksi.validate_ask', NULL, 14, 'Outlet', '2016-10-13 15:56:40', '2016-10-13 15:56:40'),
-(15, 2, 'Transaksi', 1, 'User', 'transaksi.validate_drop', NULL, 6, 'Outlet', '2016-10-13 16:01:48', '2016-10-13 16:01:48');
+(15, 2, 'Transaksi', 1, 'User', 'transaksi.validate_drop', NULL, 6, 'Outlet', '2016-10-13 16:01:48', '2016-10-13 16:01:48'),
+(16, 4, 'Transaksi', 5, 'User', 'transaksi.validate_ask', NULL, 26, 'Outlet', '2016-10-29 20:21:45', '2016-10-29 20:21:45'),
+(17, 4, 'Transaksi', 11, 'User', 'transaksi.validate_drop', NULL, 16, 'Outlet', '2016-10-29 20:25:21', '2016-10-29 20:25:21'),
+(18, 4, 'Transaksi', 7, 'User', 'transaksi.validate_accept', NULL, 26, 'Outlet', '2016-10-29 20:34:29', '2016-10-29 20:34:29');
 
 -- --------------------------------------------------------
 
@@ -137,10 +140,11 @@ CREATE TABLE `dtrans` (
 INSERT INTO `dtrans` (`dta_qty`, `dtd_qty`, `dt_rsn`, `obat_id`, `transaksi_id`, `created_at`, `updated_at`, `dtt_qty`) VALUES
 (10, 4, '', 1, 1, '2016-06-21 17:19:17', '2016-08-02 05:49:27', 4),
 (5, 3, 'kurang', 1, 2, '2016-06-30 12:07:32', '2016-10-13 15:57:49', 3),
-(2, NULL, NULL, 1, 4, '2016-10-21 08:49:59', '2016-10-21 08:49:59', NULL),
+(2, 2, '', 1, 4, '2016-10-21 08:49:59', '2016-10-29 20:23:20', 2),
 (2, 2, '', 2, 3, '2016-10-11 05:08:11', '2016-10-11 05:20:06', 2),
 (15, 10, '', 3, 1, '2016-06-21 17:19:24', '2016-10-09 17:23:17', 10),
 (4, 4, '', 4, 3, '2016-10-11 05:08:02', '2016-10-11 05:20:38', 4),
+(5, 5, '', 4, 4, '2016-10-29 20:21:37', '2016-10-29 20:23:28', 5),
 (5, 0, '', 5, 1, '2016-06-21 17:19:34', '2016-10-09 17:23:17', 0),
 (10, 8, '', 7, 2, '2016-06-30 12:07:21', '2016-10-13 15:57:58', 8);
 
@@ -965,7 +969,7 @@ INSERT INTO `obats` (`obat_id`, `grup_obat_id`, `generik_id`, `dosage_id`, `raci
 (1, 4, 16, 31, 1, 3, 4, 2, 'Amoxicilin', 10, 4900, 5000, 1, 1, 4850, 5500, 5335, 5750, '2016-05-30 11:38:42', '2016-05-30 11:39:02'),
 (2, 4, 20, 14, 1, 68, 2, 6, 'Asam Mefenamat', 15, 7000, 7200, 0, 1, 7150, 7700, 7500, 7700, '2016-05-30 11:44:45', '2016-05-30 11:44:45'),
 (3, 4, 209, 14, 1, 132, 5, 9, 'Enervon C', 10, 8000, 8200, 1, 1, 8150, 8800, 8300, 8800, '2016-05-30 11:58:05', '2016-05-30 11:58:05'),
-(4, 4, 51, 14, 1, 3, NULL, 7, 'Bacitracin', 15, 12500, 12650, 1, 1, 12000, 12800, 12500, 13000, '2016-05-31 06:20:57', '2016-05-31 06:20:57'),
+(4, 4, 51, 14, 1, 3, 5, 7, 'Bacitracin', 15, 12500, 12650, 1, 1, 12000, 12800, 12500, 13000, '2016-05-31 06:20:57', '2016-05-31 06:20:57'),
 (5, 4, 89, 20, 1, 104, 4, 5, 'Glibenclamide', 10, 6500, 6750, 1, 1, 6450, 6800, 6600, 6800, '2016-05-31 06:27:57', '2016-05-31 06:27:57'),
 (6, 3, 55, 12, 2, 61, 8, 8, 'Morfin', 5, 45000, 45500, 1, 1, 44500, 45750, 45450, 45800, '2016-05-31 06:32:23', '2016-05-31 06:32:23'),
 (7, 4, 77, 15, 1, 39, 4, 2, 'Warfarin', 10, 5500, 5550, 1, 1, 5450, 5600, 5550, 5750, '2016-05-31 06:35:01', '2016-05-31 06:35:01');
@@ -1245,7 +1249,7 @@ INSERT INTO `stocks` (`stock_id`, `stok_qty`, `outlet_id`, `obat_id`, `created_a
 (16, 15, 13, 1, '2016-05-31 07:01:33', '2016-05-31 07:01:33'),
 (17, 15, 14, 1, '2016-05-31 07:01:33', '2016-05-31 07:01:33'),
 (18, 15, 15, 1, '2016-05-31 07:01:33', '2016-05-31 07:01:33'),
-(19, 35, 16, 1, '2016-05-31 07:01:33', '2016-10-09 17:23:28'),
+(19, 37, 16, 1, '2016-05-31 07:01:33', '2016-10-29 20:34:29'),
 (20, 15, 17, 1, '2016-05-31 07:01:33', '2016-05-31 07:01:33'),
 (21, 15, 18, 1, '2016-05-31 07:01:33', '2016-05-31 07:01:33'),
 (22, 15, 19, 1, '2016-05-31 07:01:33', '2016-05-31 07:01:33'),
@@ -1255,7 +1259,7 @@ INSERT INTO `stocks` (`stock_id`, `stok_qty`, `outlet_id`, `obat_id`, `created_a
 (26, 15, 23, 1, '2016-05-31 07:01:33', '2016-05-31 07:01:33'),
 (27, 15, 24, 1, '2016-05-31 07:01:33', '2016-05-31 07:01:33'),
 (28, 15, 25, 1, '2016-05-31 07:01:33', '2016-05-31 07:01:33'),
-(29, 15, 26, 1, '2016-05-31 07:01:33', '2016-05-31 07:01:33'),
+(29, 13, 26, 1, '2016-05-31 07:01:33', '2016-10-29 20:25:22'),
 (30, 26, 1, 2, '2016-05-31 07:08:33', '2016-10-11 05:20:46'),
 (31, 30, 2, 2, '2016-05-31 07:08:33', '2016-05-31 07:08:33'),
 (32, 30, 3, 2, '2016-05-31 07:08:33', '2016-05-31 07:08:33'),
@@ -1321,7 +1325,7 @@ INSERT INTO `stocks` (`stock_id`, `stok_qty`, `outlet_id`, `obat_id`, `created_a
 (92, 28, 13, 4, '2016-05-31 07:09:52', '2016-05-31 07:09:52'),
 (93, 30, 14, 4, '2016-05-31 07:09:53', '2016-05-31 07:09:53'),
 (94, 30, 15, 4, '2016-05-31 07:09:53', '2016-05-31 07:09:53'),
-(95, 40, 16, 4, '2016-05-31 07:09:53', '2016-10-11 12:03:48'),
+(95, 45, 16, 4, '2016-05-31 07:09:53', '2016-10-29 20:34:29'),
 (96, 30, 17, 4, '2016-05-31 07:09:53', '2016-05-31 07:09:53'),
 (97, 30, 18, 4, '2016-05-31 07:09:53', '2016-05-31 07:09:53'),
 (98, 28, 19, 4, '2016-05-31 07:09:53', '2016-05-31 07:09:53'),
@@ -1331,7 +1335,7 @@ INSERT INTO `stocks` (`stock_id`, `stok_qty`, `outlet_id`, `obat_id`, `created_a
 (102, 30, 23, 4, '2016-05-31 07:09:53', '2016-05-31 07:09:53'),
 (103, 30, 24, 4, '2016-05-31 07:09:53', '2016-05-31 07:09:53'),
 (104, 28, 25, 4, '2016-05-31 07:09:53', '2016-05-31 07:09:53'),
-(105, 28, 26, 4, '2016-05-31 07:09:53', '2016-05-31 07:09:53'),
+(105, 23, 26, 4, '2016-05-31 07:09:53', '2016-10-29 20:25:22'),
 (106, 20, 1, 5, '2016-05-31 07:10:29', '2016-05-31 07:10:29'),
 (107, 20, 2, 5, '2016-05-31 07:10:29', '2016-05-31 07:10:29'),
 (108, 20, 3, 5, '2016-05-31 07:10:30', '2016-05-31 07:10:30'),
@@ -1436,7 +1440,7 @@ INSERT INTO `transaksis` (`transaksi_id`, `trans_status`, `sender_id`, `receiver
 (1, 3, 16, 12, '2016-06-21 17:19:07', '2016-10-09 17:23:28', '2016-06-21 17:19:07', '2016-07-26 00:50:36', '2016-10-09 17:23:28'),
 (2, 2, 6, 14, '2016-06-30 12:06:11', '2016-10-13 16:01:48', '2016-10-13 15:56:39', '2016-10-13 16:01:48', NULL),
 (3, 3, 16, 1, '2016-10-10 18:54:16', '2016-10-11 12:03:48', '2016-10-10 18:54:16', '2016-10-11 05:20:46', '2016-10-11 12:03:48'),
-(4, NULL, 16, 26, '2016-10-10 23:34:07', '2016-10-10 23:34:07', NULL, NULL, NULL);
+(4, 3, 16, 26, '2016-10-10 23:34:07', '2016-10-29 20:34:29', '2016-10-29 20:21:45', '2016-10-29 20:25:21', '2016-10-29 20:34:29');
 
 -- --------------------------------------------------------
 
@@ -1472,16 +1476,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `role_id`, `position_id`, `user_username`, `user_name`, `user_address`, `user_phone`, `created_at`, `updated_at`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `outlet_id`) VALUES
-(1, 1, 2, 'alkunjo', 'Alan Kuncoro Raharjo', 'Jalan Ubi 2 44A Wage Taman Sidoarjo', '085649728159', '2016-04-08 06:09:07', '2016-10-29 00:31:26', 'akr@akr.com', '$2a$10$hWheWNpc0qq6UceqVZjsw.jEjPWso5QmtWivlFrU5RUJ8W4mzHKJ6', NULL, NULL, NULL, 103, '2016-10-29 00:31:26', '2016-10-28 23:37:55', '127.0.0.1', '127.0.0.1', 1),
+(1, 1, 2, 'alkunjo', 'Alan Kuncoro Raharjo', 'Jalan Ubi 2 44A Wage Taman Sidoarjo', '085649728159', '2016-04-08 06:09:07', '2016-11-02 03:15:55', 'akr@akr.com', '$2a$10$hWheWNpc0qq6UceqVZjsw.jEjPWso5QmtWivlFrU5RUJ8W4mzHKJ6', NULL, NULL, NULL, 108, '2016-11-02 03:15:55', '2016-10-29 20:44:03', '127.0.0.1', '127.0.0.1', 1),
 (2, 4, 5, 'subagio', 'subagio', 'Jalan Embong Sawo 45 Surabaya', '031 - 73628765', '2016-04-24 15:50:44', '2016-06-27 01:01:10', 'subagio@gmail.com', '$2a$10$9Puhlo21.BTs5SEFUFKV9OBPC8X1beKRzTPxXnoOzfX4mV1Rn/.a.', NULL, NULL, NULL, 13, '2016-06-27 01:01:10', '2016-06-20 17:24:32', '127.0.0.1', '127.0.0.1', 6),
 (3, 4, 5, 'asdf1234', 'asdf1234', 'asdf1234', '081232134323', '2016-06-08 14:43:46', '2016-10-09 14:18:42', 'asdf1234@asdf.com', '$2a$10$W2phXBdR25srzPmdTWoQgOhwmC.E9bRnyKfPqf0Znz1M5NdNhMHP.', NULL, NULL, NULL, 46, '2016-10-09 14:18:42', '2016-10-09 14:09:21', '127.0.0.1', '127.0.0.1', 12),
 (4, 4, 4, 'adhani', 'Ahmad Ramdhani', 'Jalan Trunojoyo 180 Madura', '085723451234', '2016-06-16 02:52:30', '2016-10-27 13:25:25', 'adhani.adhani@gmail.com', '$2a$10$Nwui0nmdgxPmKMuWLb5Bp.QJJ7qk42A4cT0EiogwGkk9iefCwEmtK', NULL, NULL, NULL, 6, '2016-10-27 13:25:25', '2016-06-16 17:16:28', '127.0.0.1', '127.0.0.1', 14),
-(5, 3, 3, 'ulala', 'ulala', 'Jalan Rajasa 28 Surabaya', '083823123123', '2016-06-17 22:21:07', '2016-10-27 10:15:18', 'ulala@gmail.com', '$2a$10$RNiicVK/rY8MrdyGUN7C9eaKWE6R5CIZp/gIx0vai2QHufpvX2W9q', NULL, NULL, NULL, 12, '2016-10-27 10:15:18', '2016-10-20 21:01:51', '127.0.0.1', '127.0.0.1', 16),
+(5, 3, 3, 'ulala', 'ulala', 'Jalan Rajasa 28 Surabaya', '083823123123', '2016-06-17 22:21:07', '2016-10-29 20:20:46', 'ulala@gmail.com', '$2a$10$RNiicVK/rY8MrdyGUN7C9eaKWE6R5CIZp/gIx0vai2QHufpvX2W9q', NULL, NULL, NULL, 15, '2016-10-29 20:20:46', '2016-10-29 15:56:04', '127.0.0.1', '127.0.0.1', 16),
 (6, 3, 3, 'sundarisukoco', 'Sundari Sukoco', 'Jalan Megah Raya 20 Surabaya', '085723412345', '2016-06-20 10:05:51', '2016-06-30 12:02:58', 'sundari.sukoco@gmail.com', '$2a$10$E6TQaF5b7Tf5EnXuQoGIleUFOWm14CwGK.bCYCO3RLP2mFUMzmpja', NULL, NULL, NULL, 3, '2016-06-30 12:02:58', '2016-06-27 01:01:41', '127.0.0.1', '127.0.0.1', 6),
-(7, 4, 5, 'lalau', 'lalau', 'Jalan Tuanku Imam Bonjol 25', '083123412345', '2016-07-19 18:20:11', '2016-10-14 08:50:07', 'lalau@kaef.com', '$2a$10$YM4kT5qdzxpsMaAJsF8r2u18dEEavW530kgvdZnB3eN.Qa3BtF/ke', NULL, NULL, NULL, 29, '2016-10-14 08:50:06', '2016-10-13 23:30:27', '127.0.0.1', '127.0.0.1', 16),
+(7, 4, 5, 'lalau', 'lalau', 'Jalan Tuanku Imam Bonjol 25', '083123412345', '2016-07-19 18:20:11', '2016-10-29 20:32:55', 'lalau@kaef.com', '$2a$10$YM4kT5qdzxpsMaAJsF8r2u18dEEavW530kgvdZnB3eN.Qa3BtF/ke', NULL, NULL, NULL, 30, '2016-10-29 20:32:55', '2016-10-14 08:50:06', '127.0.0.1', '127.0.0.1', 16),
 (8, 3, 3, 'suroto', 'Suroto', 'Jalan Taruna Kav. 5/32B Taman Sidoarjo', '082249283712', '2016-10-28 05:14:53', '2016-10-28 05:14:53', 'suroto@gmail.com', '$2a$10$LcD1lZKr9oRH.a3avGMpIuz59hr/2bF3qwMm4C1lKKBmkY3xpWieO', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 2),
 (9, 4, 5, 'suratmi', 'Suratmi', 'Jalan Taruna Kav. 5/32B Taman Sidoarjo', '082135427462', '2016-10-28 05:15:50', '2016-10-28 05:15:50', 'suratmi@gmail.com', '$2a$10$gdD1PqvBlFeVpMRatnmXeeya.Dra82jMHmNa9CAkS.EJ913v/51o6', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 2),
-(10, 4, 5, 'marwoto', 'Marwoto', 'Jalan Kutisari 55 Waru Sidoarjo', '0856473624567', '2016-10-28 05:17:30', '2016-10-28 05:17:30', 'marwoto@gmail.com', '$2a$10$8FSHdB8VbzxPbPmPDxa/ce72i3YXv0DLVGSpwCmhnm8Egjp4C5VB2', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 7);
+(10, 4, 5, 'marwoto', 'Marwoto', 'Jalan Kutisari 55 Waru Sidoarjo', '0856473624567', '2016-10-28 05:17:30', '2016-10-28 05:17:30', 'marwoto@gmail.com', '$2a$10$8FSHdB8VbzxPbPmPDxa/ce72i3YXv0DLVGSpwCmhnm8Egjp4C5VB2', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 7),
+(11, 4, 5, 'sumarno', 'Sumarno', 'Jalan Kalibokor 54C Surabaya', '081243218765', '2016-10-29 15:58:02', '2016-10-29 20:22:40', 'sumarno@gmail.com', '$2a$10$YwCeRBU.VQ4dbRTRm4KYiu9286gtInj/SV0FGRD5kig6uRKzR86l2', NULL, NULL, NULL, 2, '2016-10-29 20:22:40', '2016-10-29 15:58:13', '127.0.0.1', '127.0.0.1', 26);
 
 --
 -- Indexes for dumped tables
@@ -1639,7 +1644,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `activities`
 --
 ALTER TABLE `activities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `dosages`
 --
@@ -1719,7 +1724,7 @@ ALTER TABLE `transaksis`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- Constraints for dumped tables
 --

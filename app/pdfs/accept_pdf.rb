@@ -19,9 +19,15 @@ class	AcceptPdf < Prawn::Document
     rid = @transaksi.receiver_id.to_s
     if rid.length == 1
       rid = '0'+rid
-    end		
+    end
+    font_size(10) {text "PT. Kimia Farma Apotek"}
+		move_down 3
+		font_size(10) {text "Apotek #{sender.outlet_name}"}
+		move_down 3
+		font_size(10) {text "#{sender.outlet_city}"}
+		move_down 15		
 		font_size(13) {text "BUKTI PENERIMAAN BARANG", align: :center, style: :bold}
-		move_down 20
+		move_down 3
 		font_size(12) {text "Terima dari: Apotek #{receiver.outlet_name}", align: :center}
 		move_down 3
 		font_size(12) {text "Nomor BPBA: B#{sid}#{sid}#{@transaksi.created_at.strftime("%d%m%Y")}   Nomor Penerimaan: T#{sid}#{sid}#{@transaksi.accepted_at.strftime("%d%m%Y")}", align: :center}
@@ -44,18 +50,17 @@ class	AcceptPdf < Prawn::Document
 	def table_accept
 		numb = 0
 		total = 0
-		[["No.","Nama Obat", "Jml Terima", "Kemasan", "Hrg Satuan", "Total Harga"]]+
+		[["No.","Nama Obat", "Jml Terima", "Hrg Satuan", "Total Harga"]]+
 		@transaksi.dtrans.map do |dtran|
 			numb = numb + 1
 			total = total + dtran.dtt_qty*Obat.find(dtran.obat_id).obat_hpp
 			[numb, 
 			 Obat.find(dtran.obat_id).obat_name, 
-			 dtran.dtt_qty,
-			 "#{Kemasan.find(Obat.find(dtran.obat_id).kemasan_id).kemasan_vol.to_s} #{Kemasan.find(Obat.find(dtran.obat_id).kemasan_id).kemasan_unit}",
+			 "#{dtran.dtt_qty} #{Kemasan.find(Obat.find(dtran.obat_id).kemasan_id).kemasan_unit} @#{Kemasan.find(Obat.find(dtran.obat_id).kemasan_id).kemasan_cap}",
 			 to_rupiah(Obat.find(dtran.obat_id).obat_hpp),
 			 to_rupiah(dtran.dtt_qty*Obat.find(dtran.obat_id).obat_hpp)]
 		end+
-		[[{:content => "Total", :colspan => 5},to_rupiah(total)]]
+		[[{:content => "Total", :colspan => 4},to_rupiah(total)]]
 
 	end
 

@@ -20,8 +20,14 @@ class	DropPdf < Prawn::Document
     if rid.length == 1
       rid = '0'+rid
     end	
+    font_size(10) {text "PT. Kimia Farma Apotek"}
+		move_down 3
+		font_size(10) {text "Apotek #{receiver.outlet_name}"}
+		move_down 3
+		font_size(10) {text "#{receiver.outlet_city}"}
+		move_down 15
 		font_size(13) {text "FORM DROPPING BARANG APOTEK", align: :center, style: :bold}
-		move_down 20
+		move_down 3
 		font_size(12) {text "Dropping Ke: Apotek #{sender.outlet_name}", align: :center}
 		move_down 3
 		font_size(12) {text "Tahun Dropping: #{@transaksi.dropped_at.strftime("%Y")}    Tahun BPBA: #{@transaksi.asked_at.strftime("%Y")} ", align: :center}
@@ -46,18 +52,17 @@ class	DropPdf < Prawn::Document
 	def table_drop
 		numb = 0
 		total = 0
-		[["No.","Nama Obat", "Qty Dropping", "Kemasan", "Hrg Satuan", "Total Harga"]]+
+		[["No.","Nama Obat", "Qty Dropping", "Hrg Satuan", "Total Harga"]]+
 		@transaksi.dtrans.map do |dtran|
 			numb = numb + 1
 			total = total + dtran.dtd_qty*Obat.find(dtran.obat_id).obat_hpp
 			[numb, 
 			 Obat.find(dtran.obat_id).obat_name, 
-			 dtran.dtd_qty,
-			 "#{Kemasan.find(Obat.find(dtran.obat_id).kemasan_id).kemasan_vol.to_s} #{Kemasan.find(Obat.find(dtran.obat_id).kemasan_id).kemasan_unit}",
+			 "#{dtran.dtd_qty} #{Kemasan.find(Obat.find(dtran.obat_id).kemasan_id).kemasan_unit} @#{Kemasan.find(Obat.find(dtran.obat_id).kemasan_id).kemasan_cap.to_s}",
 			 to_rupiah(Obat.find(dtran.obat_id).obat_hpp),
 			 to_rupiah(dtran.dtd_qty*Obat.find(dtran.obat_id).obat_hpp)]
 		end+
-		[[{:content => "Total", :colspan => 5},to_rupiah(total)]]
+		[[{:content => "Total", :colspan => 4},to_rupiah(total)]]
 
 	end
 

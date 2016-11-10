@@ -16,3 +16,6 @@ SaldoAkhir ((awal+beli)-(jual+-dropping))
 
 Safetystock didapat dari pareto penjualan selama 1 bulan + stock aman (+-2 minggu)
 warning 2 minggu
+
+jenis kemasan:
+tablet, ampul, strip, dus, botol, box

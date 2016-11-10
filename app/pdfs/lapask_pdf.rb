@@ -14,14 +14,14 @@ class	LapaskPdf < Prawn::Document
 	end
 
 	def header_page
-		font_size(10) {text "PT. Kimia Farma Apotek", style: :bold}
+		font_size(10) {text "PT. Kimia Farma Apotek"}
 		move_down 3
-		font_size(10) {text "Apotek #{@sender.outlet_name}", style: :bold}
+		font_size(10) {text "Apotek #{@sender.outlet_name}"}
 		move_down 3
-		font_size(10) {text "#{@sender.outlet_address}", style: :bold}
+		font_size(10) {text "#{@sender.outlet_address}"}
 		move_down 3
-		font_size(10) {text "#{@sender.outlet_city}", style: :bold}
-		move_down 3
+		font_size(10) {text "#{@sender.outlet_city}"}
+		move_down 15
 		font_size(12) {text "Laporan Permintaan Obat", style: :bold, align: :center}
 		move_down 3
 		font_size(12) {text "Bulan #{bulan(@month)} Tahun #{@year}", style: :bold, align: :center}

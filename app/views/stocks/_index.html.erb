@@ -2,7 +2,7 @@
   <tr>
   	<% if current_user.admin? %><td><%= stock.outlet.outlet_name %></td><%end%>
   	<td><%= stock.obat.obat_name %></td>
-  	<td><%= stock.stok_qty %></td>
+  	<td><%= stock.stok_qty %>&nbsp;<%= getKemasan(stock.obat_id) %>@<%= getIsi(stock.obat_id) %></td>
     
     <% if current_user.admin? %>
     <td>
